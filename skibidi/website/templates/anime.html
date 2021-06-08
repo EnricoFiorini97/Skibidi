@@ -1,0 +1,12 @@
+<head>
+    <title> {{anime}} {{stagione}}X{{ep}} </title>
+</head>
+<body>
+
+    <video width="1080" height="720" controls autoplay>
+        <source src="/static/{{anime}}/{{stagione}}/{{ep}}.mp4" type="video/mp4"></source>
+    </video>
+    <p></p>
+    <a href="/{{anime}}/{{stagione}}/{{ep|add:'-1'}}">Episodio Precedente</a>
+    <a href="/{{anime}}/{{stagione}}/{{ep|add:'+1'}}">Episodio Successivo</a>
+</body>
