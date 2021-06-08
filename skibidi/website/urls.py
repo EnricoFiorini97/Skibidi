@@ -3,5 +3,8 @@ from . import views
 
 urlpatterns = [
         path('',views.index, name='index'),
-        path('<str:anime>/<int:stagione>/<int:ep>',views.anime, name='anime')
+        path('anime/<str:anime>/<int:stagione>/<int:ep>/',views.anime_ep, name='anime_ep'),
+        path('anime/<str:anime>/<int:stagione>/', views.anime_ep_list, name='anime_ep_list'),
+        path('anime/<str:anime>/', views.anime_seas, name='anime_seas'),
+        
 ]
