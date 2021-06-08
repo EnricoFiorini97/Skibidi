@@ -4,14 +4,9 @@
 </head>
 <body>
     <p>Anime List</p>
-<!--<iframe width="420" height="345" 
-        src="https://www.youtube.com/embed/EqSclLcbvCA">
-    </iframe>!-->
     <ul>
         {% for anime in anime_list %}
            <li><a href="/anime/{{anime}}">{{anime}}</a></li> 
         {% endfor %}
-        <!--<li><a href="/anime/One Piece/">OnePiece</a></li>
-        <li><a href="/anime/My Hero Academia/">My Hero Academia</a></li>!-->
     </ul>
 </body>
