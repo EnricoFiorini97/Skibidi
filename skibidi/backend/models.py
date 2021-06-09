@@ -22,7 +22,8 @@ class Anime(models.Model):
     a_kind_id = models.ForeignKey(Kind, related_name='a_kind_id', on_delete=SET_DEFAULT, null=False, default=0)
     last_update = models.DateField()
     autodownlodable = models.BooleanField(null=False)
-
+    finished = models.BooleanField(null=False)
+    
 class FavoritesKind(models.Model):
     class Meta:
         unique_together = (('fk_user_id', 'fk_kind_id'),)
@@ -39,7 +40,7 @@ class FavoritesAnime(models.Model):
     
 class Watching(models.Model):
     class Meta:
-        unique_together = (('w_anime_id', 'w_season_id', 'w_user_id'),)
+        unique_together = (('w_anime_id', 'w_user_id'),)
     watching_id = models.AutoField(primary_key=True)
     w_user_id = models.ForeignKey(User, related_name='w_user_id', on_delete=CASCADE, null=False)
     w_anime_id = models.ForeignKey(Anime, related_name='w_anime_id', on_delete=CASCADE, null=False)
