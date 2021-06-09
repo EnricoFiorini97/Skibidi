@@ -16,13 +16,14 @@ class Anime(models.Model):
         unique_together = (('name', 'season'),)
     anime_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length = 255, null=False)
+    plot = models.CharField(max_length = 1000, null=True)
     season = models.PositiveSmallIntegerField(null=False)
     num_episodes = models.PositiveSmallIntegerField(null=False)
     start_number_episode = models.PositiveSmallIntegerField(null=False)
-    a_kind_id = models.ForeignKey(Kind, related_name='a_kind_id', on_delete=SET_DEFAULT, null=False, default=0)
+    path = models.FilePathField(null=True)
     last_update = models.DateField()
-    autodownlodable = models.BooleanField(null=False)
-    finished = models.BooleanField(null=False)
+    autodownlodable = models.BooleanField(null=True)
+    finished = models.BooleanField(null=True)
     
 class FavoritesKind(models.Model):
     class Meta:
@@ -45,7 +46,7 @@ class Watching(models.Model):
     w_user_id = models.ForeignKey(User, related_name='w_user_id', on_delete=CASCADE, null=False)
     w_anime_id = models.ForeignKey(Anime, related_name='w_anime_id', on_delete=CASCADE, null=False)
     episode = models.PositiveSmallIntegerField(null=False)
-    seconds = models.PositiveSmallIntegerField(null=False) #TODO: convert to hh-mm-ss
+    seconds = models.PositiveSmallIntegerField(null=False, default=0) #TODO: convert to hh-mm-ss
 
 class UserRating(models.Model):
     class Meta:
@@ -54,3 +55,10 @@ class UserRating(models.Model):
     ur_anime_id = models.ForeignKey(Anime, related_name='ur_anime_id', on_delete=CASCADE, null=False)
     ur_user_id = models.ForeignKey(User, related_name='ur_user_id' ,on_delete=CASCADE, null=False)
     rating = models.PositiveSmallIntegerField(null=False)
+
+class KindAnime(models.Model):
+    class Meta:
+        unique_together = (('ka_anime_id', 'ka_kind_id'),)
+    kind_anime_id = models.AutoField(primary_key=True)
+    ka_anime_id = models.ForeignKey(Anime, related_name='ka_anime_id', on_delete=CASCADE, null=False)
+    ka_kind_id = models.ForeignKey(Kind, related_name='ka_kind_id', on_delete=CASCADE, null=False)
