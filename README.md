@@ -1,2 +1,2 @@
 # Skibidi
-Sistema di prenotazioni alberghiere
+Embedded streaming Platform!
