@@ -1,12 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by TEMPLATED
+http://templated.co
+Released for free under the Creative Commons Attribution License
 
+Name       : BlackPolish 
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20121026
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title> Skibidi </title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Skibidi</title>
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Abel|Satisfy' rel='stylesheet' type='text/css' />
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <body>
-    <p>Anime List</p>
-    <ul>
-        {% for anime in anime_list %}
-           <li><a href="/anime/{{anime}}">{{anime}}</a></li> 
-        {% endfor %}
-    </ul>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#">Skibidi</a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item"><a href="#">Homepage</a></li>
+					<li><a href="#">Lista Anime</a></li>
+					<li><a href="#">Lista Generi</a></li>
+					<li><a href="#">Login</a></li>
+					<li><a href="#">Registrati</a></li>
+				</ul>
+			</div>
+			<div id=search><input type="text" id="barra-ricerca" onkeyup="ricerca()" placeholder="Cerca"><button>Cerca</button></div>
+			<script>
+				function ricerca(tab, lists) {
+				var input; 
+				var filtro;
+				var lista;
+				var voci;
+				var x;
+				var i;
+				var testo;
+				  input = document.getElementById(tab);
+				  filtro = input.value.toUpperCase();
+				  lista = document.getElementById(lists);
+				  voci = lista.getElementsByTagName("li");
+				  for (i = 0; i < voci.length; i++) {
+					x = lista.getElementsByTagName("li")[i];
+					testo = x.textContent || x.innerText;
+					if (testo.toUpperCase().indexOf(filtro) > -1) {
+					  voci[i].style.display = "";
+					} else {
+					  voci[i].style.display = "none";
+					}
+				  }
+				}
+			  </script>
+		</div>
+		<div id="banner">
+			<div class="content">
+				<div><img src="static/crossover.jpg" width="1000" height="400" alt="" /></div>
+			</div>
+		</div>
+	</div>
+	<!-- end #header -->
+	<div id="page">
+		<div class="post">
+			<h2 class="title"><a href="#">Benvenuti a skibidi</a></h2>
+			<div class="entry">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra sem felis, vitae sagittis diam ullamcorper posuere. Maecenas dolor velit, vestibulum ac venenatis eu, pulvinar ac sapien. Sed dapibus, purus a rutrum finibus, ante libero lobortis dui, non tempor lectus tellus id quam. Phasellus venenatis ac lorem eu blandit. Aliquam ut vehicula urna. Nam semper sollicitudin libero sit amet aliquet. Aenean congue, dui id efficitur iaculis, ex eros ultrices quam, id fermentum neque velit eget nunc. Quisque commodo consectetur feugiat. Proin suscipit dolor facilisis mauris interdum, in accumsan velit dapibus. Mauris quis nulla augue. Duis at tellus varius nulla gravida luctus. Integer vitae tincidunt nisl, in consectetur ante. In egestas quam vitae metus suscipit, et molestie risus sagittis.  </p>
+			</div>
+		</div>
+	</div>
+	<!-- end #page --> 
+	<div id="featured-content">
+		<div id="column1">
+			<h2>One Piece</h2>
+			<p><a href="/anime/One Piece"><img src="static/one_piece.jpg" width="300" height="150" alt="" /></a></p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra sem felis, vitae sagittis diam ullamcorper posuere. Maecenas dolor velit, vestibulum ac venenatis eu, pulvinar ac sapien. Sed dapibus, purus a rutrum finibus, ante libero lobortis dui, non tempor lectus tellus id quam. Phasellus venenatis ac lorem eu blandit.</p>
+			<p class="button"><a href="#">Read More</a></p>
+		</div>
+		<div id="column2">
+			<h2>My Hero Academia</h2>
+			<p><a href="/anime/My Hero Academia"><img src="static/my_hero_academia.jpg" width="300" height="150" alt="" /></a></p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra sem felis, vitae sagittis diam ullamcorper posuere. Maecenas dolor velit, vestibulum ac venenatis eu, pulvinar ac sapien. Sed dapibus, purus a rutrum finibus, ante libero lobortis dui, non tempor lectus tellus id quam. Phasellus venenatis ac lorem eu blandit.</p>
+			<p class="button"><a href="#">Read More</a></p>
+		</div>
+		<div id="column3">
+			<h2>Code Geass</h2>
+			<p><img src="static/code_geass.jpg" width="300" height="150" alt="" /></p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra sem felis, vitae sagittis diam ullamcorper posuere. Maecenas dolor velit, vestibulum ac venenatis eu, pulvinar ac sapien. Sed dapibus, purus a rutrum finibus, ante libero lobortis dui, non tempor lectus tellus id quam. Phasellus venenatis ac lorem eu blandit.</p>
+			<p class="button"><a href="#">Read More</a></p>
+		</div>
+	</div>
+</div>
+<div id="footer-content-wrapper">
+	<div id="footer-content">
+		<div id="fbox1">
+			<h2>Contatti</h2>
+			<ul class="style1">
+				<li class="first"><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+			</ul>
+		</div>
+		<div id="fbox2">
+			<h2>Supportaci</h2>
+			<ul class="style1">
+				<li class="first"><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+			</ul>
+		</div>
+		<div id="fbox3">
+			<h2>Amici del web</h2>
+			<ul class="style1">
+				<li class="first"><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+				<li><a href="#">Curabitur porttitor eros nec orci malesuada pulvinar.</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="footer">
+	<p>&copy; All rights reserved. Created by Enrico Fiorini and Carmine La Luna</a>.</p>
+</div>
+<!-- end #footer -->
 </body>
+</html>

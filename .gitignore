@@ -1,7 +1,7 @@
 skibidi/db.sqlite3
 skibidi/env.py
 skibidi/backend/migrations/**
-skibidi/website/static/**
+skibidi/website/static/Anime/**
 skibidi/__pycache__/**
 skibidi/backend/__pycache__/**
 skibidi/skibidi/__pycache__/**
