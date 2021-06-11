@@ -16,15 +16,15 @@ class Anime(models.Model):
         unique_together = (('name', 'season'),)
     anime_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length = 255, null=False)
-    plot = models.CharField(max_length = 1000, null=True)
+    plot = models.CharField(max_length = 1000, null=True, blank=True)
     season = models.PositiveSmallIntegerField(null=False)
     last_episode = models.PositiveSmallIntegerField(null=False)
     start_number_episode = models.PositiveSmallIntegerField(null=False)
-    global_rating = models.PositiveSmallIntegerField(null=True)
-    path = models.FilePathField(null=True)
+    global_rating = models.PositiveSmallIntegerField(null=True, blank=True)
+    path = models.FilePathField(null=True, blank=True)
     last_update = models.DateField()
-    autodownlodable = models.BooleanField(null=True)
-    finished = models.BooleanField(null=True)
+    autodownlodable = models.BooleanField(null=True, blank=True)
+    finished = models.BooleanField(null=True, blank=True)
     
 class FavoritesKind(models.Model):
     class Meta:
