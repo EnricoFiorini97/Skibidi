@@ -8,6 +8,8 @@ from os.path import dirname
 from http import HTTPStatus
 from backend.errors import DBErrors
 from rest_framework import serializers
+from backend.models import User, Kind, Anime
+
 
 class AnimeSerializer(serializers.Serializer):
     anime_id = serializers.IntegerField()
@@ -22,14 +24,48 @@ class AnimeSerializer(serializers.Serializer):
     finished = serializers.BooleanField()
 
 
+class UserSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    username = serializers.CharField(max_length = 255)
+    name = serializers.CharField(max_length = 255)
+    surname = serializers.CharField(max_length = 255)
+
 class KindSerializer(serializers.Serializer):
     kind_id = serializers.IntegerField()
     kind_name = serializers.CharField(max_length = 255)
 
+
 class FavoritesKindSerializer(serializers.Serializer):
     favorites_kind_id = serializers.IntegerField()
-    fk_user = serializers.IntegerField()
-    fk_kind = serializers.IntegerField()
+    fk_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    fk_kind = serializers.PrimaryKeyRelatedField(queryset=Kind.objects.all())
+
+
+class FavoritesAnimeSerializer(serializers.Serializer):
+    favorites_anime_id = serializers.IntegerField()
+    fa_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
+    fa_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+
+
+class WatchingSerializer(serializers.Serializer):
+    watching_id = serializers.IntegerField()
+    w_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    w_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
+    episode = serializers.IntegerField()
+    seconds = serializers.IntegerField()
+
+
+class UserRatingSerializer(serializers.Serializer):
+    user_rating_id = serializers.IntegerField()
+    ur_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
+    ur_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    rating = serializers.IntegerField()
+
+
+class KindAnimeSerializer(serializers.Serializer):
+    kind_anime_id = serializers.IntegerField()
+    ka_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
+    ka_kind = serializers.PrimaryKeyRelatedField(queryset=Kind.objects.all())
 
 
 def __json_db_query_serialize(status=HTTPStatus.OK, body=""):

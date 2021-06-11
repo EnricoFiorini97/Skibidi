@@ -1,18 +1,19 @@
 from django.urls import path 
 from backend import views
-from backend.views import AnimeListAPIView, KindListAPIView
+from backend.views import AnimeListAPIView, KindListAPIView, UserListAPIView, FavoritesKindListAPIView, FavoritesAnimeListAPIView, WatchingListAPIView, UserRatingListAPIView, KindAnimeListAPIView
+from backend.views import AnimeUniqueListAPIView, EpisodesListAPIView, SeasonsListAPIView
+from backend import views
 
 urlpatterns = [
         path('search/serializers/anime/all/', AnimeListAPIView.as_view()),
         path('search/serializers/kind/all/', KindListAPIView.as_view()),
-        
+        path('search/serializers/user/all/', UserListAPIView.as_view()),
+        path('search/serializers/favorites/kind/all/', FavoritesKindListAPIView.as_view()),
+        path('search/serializers/favorites/anime/all/', FavoritesAnimeListAPIView.as_view()),
+        path('search/serializers/watching/all/', WatchingListAPIView.as_view()),
+        path('search/serializers/user/rating/all/', UserRatingListAPIView.as_view()),
+        path('search/serializers/kind/anime/all/', KindAnimeListAPIView.as_view()),
+        path('search/serializers/anime/all/list/', AnimeUniqueListAPIView.as_view()),
+        path('search/serializers/anime/<str:anime>/seasons/', SeasonsListAPIView.as_view()),
+        path('search/serializers/anime/<str:anime>/<int:season>/episodes/', EpisodesListAPIView.as_view()),
 ]
-
-'''
-        path('search/all/anime/', views.display_all_anime, name="display_all_anime"),
-        path('search/anime/<str:anime>/', views.display_anime_by_name, name="display_anime_by_name"),
-        path('search/kind/<str:kind>/', views.display_anime_by_kind, name="display_anime_by_kind"),
-        path('search/rating/',views.display_anime_by_global_rating, name="display_anime_by_global_rating"),
-        path('search/rating/kind/<str:kind>', views.display_anime_by_global_rating_and_kind, name="display_anime_by_global_rating_and_kind"),
-        path('search/all/anime/titles/', views.display_all_distinct_titles, name="display_all_distinct_titles"),
-        path('search/anime/<str:anime>/seasons', views.display_season_by_anime_name, name="display_season_by_anime_name"),''' 
