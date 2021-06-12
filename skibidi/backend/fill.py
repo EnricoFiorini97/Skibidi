@@ -1,6 +1,6 @@
 from backend.models import Anime, FavoritesKind,User, Watching, UserRating, Kind, KindAnime, FavoritesAnime
 
-def fill_user()
+def fill_user():
     username = input("Inserire username: ")
     name = input("Inserire nome: ")
     surname = input("Inserire cognome: ")

@@ -1,4 +1,4 @@
-from backend.models import KindAnime,User, Kind, Anime,FavoritesKind,FavoritesAnime,Watching,UserRating
+from backend.models import KindAnime, User, Kind, Anime, FavoritesKind, FavoritesAnime, Watching, UserRating, Episode
 
 u = User(username="test", name="name", surname="smith")
 u.save()
@@ -18,7 +18,10 @@ fk.save()
 fa = FavoritesAnime(fa_anime=a, fa_user=u)
 fa.save()
 
-w = Watching(w_user=u, w_anime=a, episode=1, seconds=134)
+e = Episode(name="Rufy vs Kaido", seen=1, e_anime=a, path="")
+e.save()
+
+w = Watching(w_user=u, w_anime=a, w_episode=e, seconds=134)
 w.save()
 
 ur = UserRating(ur_anime=a,ur_user=u,rating=4)

@@ -1,10 +1,6 @@
-import copy
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.decorators.http import require_http_methods
-from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, UserRatingSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer
-from rest_framework import generics, serializers
-from backend.models import Anime, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, User
+from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, UserRatingSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer
+from rest_framework import generics
+from backend.models import Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, User
 
 
 class AnimeListAPIView(generics.ListAPIView):
@@ -21,21 +17,16 @@ class SeasonsListAPIView(generics.ListAPIView):
     serializer_class = AnimeSerializer
     
     def get_queryset(self):
-        name= self.kwargs['anime']
-        tmp = Anime.objects.filter(name=name)
-        return tmp
+        return Anime.objects.filter(name=self.kwargs['anime'])
 
 
 class EpisodesListAPIView(generics.ListAPIView):
     serializer_class = AnimeSerializer
     
     def get_queryset(self):
-        name = self.kwargs['anime']
-        season = self.kwargs['season']
-        tmp = Anime.objects.filter(name=name, season=season)
-        return tmp
+        return Anime.objects.filter(name=self.kwargs['anime'], season=self.kwargs['season'])
+ 
     
-
 class KindListAPIView(generics.ListAPIView):
     queryset = Kind.objects.all()
     serializer_class = KindSerializer
@@ -71,38 +62,32 @@ class KindAnimeListAPIView(generics.ListAPIView):
     serializer_class = KindAnimeSerializer
 
 
-
-'''
-@require_http_methods(["GET"])
-def display_all_anime(request):
-    return HttpResponse(serializers.serialize_all_anime_to_json())
-
-
-@require_http_methods(["GET"])
-def display_anime_by_name(request, anime="One Piece"):
-    return HttpResponse(serializers.serialize_anime_by_name_to_json(anime))
+class UserFavoritesAnimeListAPIView(generics.ListAPIView):
+    serializer_class = FavoritesAnimeSerializer
+    
+    def get_queryset(self):
+        return FavoritesAnime.objects.filter(fa_user_id=self.kwargs['user_id'])
 
 
-@require_http_methods(["GET"])
-def display_anime_by_kind(request, kind="shonen"):
-    return HttpResponse(serializers.serialize_anime_by_kind_to_json(kind))
+class UserFavoritesKindListAPIView(generics.ListAPIView):
+    serializer_class = FavoritesKindSerializer
+    
+    def get_queryset(self):
+        return FavoritesKind.objects.filter(fk_user_id=self.kwargs['user_id'])
 
 
-@require_http_methods(["GET"])
-def display_anime_by_global_rating(request):
-    return HttpResponse(serializers.serialize_anime_by_global_rating_to_json())
+class SpecificAnimeKindListAPIView(generics.ListAPIView):
+    serializer_class = KindAnimeSerializer
+    
+    def get_queryset(self):
+        return KindAnime.objects.filter(ka_anime_id=self.kwargs['anime_id'])
 
 
-@require_http_methods(["GET"])
-def display_anime_by_global_rating_and_kind(request, kind="shonen"):
-    return HttpResponse(serializers.serialize_anime_by_global_rating_and_kind_to_json(kind))
+class AnimeEpisodeListAPIView(generics.ListAPIView):
+    serializer_class = EpisodeSerializer
+
+    def get_queryset(self):
+        return Episode.objects.filter(e_anime=self.kwargs['anime_id'])
 
 
-@require_http_methods(["GET"])
-def display_all_distinct_titles(request):
-    return HttpResponse(serializers.serialize_all_distinct_titles_to_json())
-    s
 
-@require_http_methods(["GET"])
-def display_season_by_anime_name(request, anime="One Piece"):
-    return HttpResponse(serializers.serialize_season_by_anime_name_to_json(anime))'''
