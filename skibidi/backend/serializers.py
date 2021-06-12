@@ -65,4 +65,4 @@ class EpisodeSerializer(serializers.Serializer):
     name = serializers.CharField(max_length = 255)
     seen = serializers.IntegerField()
     e_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
-    #path = serializers.FilePathField()
+    path = serializers.URLField()

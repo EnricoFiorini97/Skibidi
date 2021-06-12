@@ -1,4 +1,13 @@
 from backend.models import KindAnime, User, Kind, Anime, FavoritesKind, FavoritesAnime, Watching, UserRating, Episode
+from backend.serializers import AnimeSerializer
+
+def onepiece_url_generator(ep_number=1) -> str:
+    if ep_number < 0:
+        raise ValueError("Episode number must be non-negative.")
+    str_ep = str(ep_number)
+    if ep_number < 10:
+        str_ep = "0" + str_ep
+    return f"http://www.onlyonepiece.cloud/DDL/ANIME/OnePiece/OnePiece_Ep_{str_ep}_SUB_ITA.mp4"
 
 u = User(username="test", name="name", surname="smith")
 u.save()
@@ -69,6 +78,19 @@ a.save()
 a = Anime(name="One Piece", global_rating = 5,plot="x", season = 19, last_episode=891, start_number_episode=783, last_update="2021-06-06", autodownlodable=True, finished=True)
 a.save()
 a = Anime(name="One Piece", global_rating = 5,plot="x", season = 20, last_episode=977, start_number_episode=892, last_update="2021-06-06", autodownlodable=True, finished=False)
+
+'''
+for season in Anime.objects.filter(name="One Piece"):
+    serialized_season = AnimeSerializer('json', [season,])
+    print(serialized_season.__dict__)
+    if serialized_season.is_valid():
+        for j in range(serialized_season['start_number_episode'].value(), serialized_season['last_episode'].value()):
+            ep = Episode(name=str(j),seen=104, e_anime=season, path=onepiece_url_generator(ep_number=j))
+            ep.save()
+            print(ep.__dict__)
+    else:
+        print("serialization failed!")'''
+
 a.save()
 a = Anime(name="My Hero Academia", global_rating = 1, plot="x", season=1, last_episode=13, start_number_episode=1, last_update="2016-06-26",autodownlodable=False, finished = True)
 a.save()
@@ -84,3 +106,8 @@ ka = KindAnime(ka_anime=Anime.objects.get(name="My Hero Academia", season=1),ka_
 ka.save()
 ka = KindAnime(ka_anime=Anime.objects.get(name="My Hero Academia", season=2),ka_kind=k2)
 ka.save()
+
+
+
+''' nime_id': 1, 'name': 'One Piece', 'plot': 'x', 'season': 1, 'last_episode': 61, 'start_number_episode': 1, 'global_rating': 5, 'path': None, 'last_update': datetime.date(2021, 6, 6), 'autodownlodable': True, 'finished': True}
+'''

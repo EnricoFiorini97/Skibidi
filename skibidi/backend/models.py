@@ -50,7 +50,7 @@ class Episode(models.Model):
     name = models.CharField(max_length = 255, null=False)
     seen = models.PositiveSmallIntegerField(null=False)
     e_anime = models.ForeignKey(Anime, related_name= 'e_anime',on_delete=CASCADE, null=False)
-    path = models.FilePathField(null=True, blank=True)
+    path = models.URLField(null=False)
 
 
 class Watching(models.Model):
