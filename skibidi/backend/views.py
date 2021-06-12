@@ -8,7 +8,7 @@ from backend.models import Anime, Kind, FavoritesKind, UserRating, Watching, Fav
 
 
 class AnimeListAPIView(generics.ListAPIView):
-    queryset = Anime.objects.all()
+    queryset = Anime.objects.order_by('name','season')
     serializer_class = AnimeSerializer
 
 
