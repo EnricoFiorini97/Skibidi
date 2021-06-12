@@ -23,3 +23,12 @@ def anime_ep(request, anime, stagione, ep):
 def anime_ep_list(request, anime, stagione):
     r = json.loads(requests.get(f'http://{env.MY_IP}:8000/backend/search/serializers/anime/{anime}/seasons').text)
     return render(request, 'index_episodes.html',{'anime': anime,'stagione':stagione, 'ep_list':range(r[stagione-1]['start_number_episode'], r[stagione-1]['last_episode']+1)})
+
+def login(request):
+    return render(request, 'login.html')
+
+def signup(request):
+    return render(request, 'signup.html')
+
+def forgot(request):
+    return render(request, 'forgot-password.html')
