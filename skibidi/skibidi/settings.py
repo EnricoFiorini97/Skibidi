@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'skibidi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skibidi_db',
+        'NAME': env.DB_NAME,
         'USER': env.DB_USER,
         'PASSWORD': env.DB_PWD,
     }
