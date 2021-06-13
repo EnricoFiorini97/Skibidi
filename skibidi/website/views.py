@@ -17,8 +17,12 @@ def index(request):
     return render(request, 'index.html', {'anime_list':anime_list, 'kind_list':kind_list})
 
 def anime_ep(request, anime, stagione, ep):
-    print("test")
-    return render(request, 'media.html', {'anime': anime,'stagione':stagione,'ep':ep})
+    r = json.loads(requests.get(f'http://{env.MY_IP}:8000/backend/search/serializers/anime/all/').text)
+    for i in range(len(r)):
+        if r[i]["name"] == anime and r[i]['season'] == stagione:
+            identify = r[i]['anime_id']        
+    r = json.loads(requests.get(f'http://{env.MY_IP}:8000/backend/search/serializers/episodes/anime/{identify}').text)
+    return render(request, 'media.html', {'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':r[ep-1]['path']})
 
 def anime_ep_list(request, anime, stagione):
     r = json.loads(requests.get(f'http://{env.MY_IP}:8000/backend/search/serializers/anime/{anime}/seasons').text)

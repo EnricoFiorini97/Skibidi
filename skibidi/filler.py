@@ -18,7 +18,7 @@ k.save()
 k2= Kind(kind_name="isekai")
 k2.save()
 
-a = Anime(name="One Piece", global_rating = 5,plot="x", season = 1, last_episode=61, start_number_episode=1, last_update="2021-06-06", autodownlodable=True, finished=True)
+a = Anime(name="Code Geass", global_rating = 5,plot="x", season = 1, last_episode=25, start_number_episode=1, last_update="2021-06-06", autodownlodable=False, finished=False)
 a.save()
 
 fk = FavoritesKind(fk_user=u, fk_kind=k)
@@ -27,7 +27,7 @@ fk.save()
 fa = FavoritesAnime(fa_anime=a, fa_user=u)
 fa.save()
 
-e = Episode(name="Rufy vs Kaido", seen=1, e_anime=a, path="")
+e = Episode(name="1", seen=1, e_anime=a, path="")
 e.save()
 
 w = Watching(w_user=u, w_anime=a, w_episode=e, seconds=134)
@@ -41,6 +41,8 @@ ka.save()
 
 ki = Kind.objects.get(kind_name="shonen")
 
+a = Anime(name="One Piece", global_rating = 5,plot="x", season = 1, last_episode=61, start_number_episode=1, last_update="2021-06-06", autodownlodable=True, finished=True)
+a.save()
 a = Anime(name="One Piece", global_rating = 1,plot="x", season = 2, last_episode=77, start_number_episode=62, last_update="2021-06-06", autodownlodable=True, finished=True)
 a.save()
 a = Anime(name="One Piece", global_rating = 3,plot="x", season = 3, last_episode=92, start_number_episode=78, last_update="2021-06-06", autodownlodable=True, finished=True)
@@ -78,18 +80,16 @@ a.save()
 a = Anime(name="One Piece", global_rating = 5,plot="x", season = 19, last_episode=891, start_number_episode=783, last_update="2021-06-06", autodownlodable=True, finished=True)
 a.save()
 a = Anime(name="One Piece", global_rating = 5,plot="x", season = 20, last_episode=977, start_number_episode=892, last_update="2021-06-06", autodownlodable=True, finished=False)
+a.save()
 
-'''
+
 for season in Anime.objects.filter(name="One Piece"):
-    serialized_season = AnimeSerializer('json', [season,])
-    print(serialized_season.__dict__)
-    if serialized_season.is_valid():
-        for j in range(serialized_season['start_number_episode'].value(), serialized_season['last_episode'].value()):
-            ep = Episode(name=str(j),seen=104, e_anime=season, path=onepiece_url_generator(ep_number=j))
-            ep.save()
-            print(ep.__dict__)
-    else:
-        print("serialization failed!")'''
+    serialized_season = AnimeSerializer(season)
+    print(f"Stagione {serialized_season.data['season']} di {serialized_season.data['name']}")
+    for j in range(serialized_season.data['start_number_episode'], serialized_season.data['last_episode']+1):
+        ep = Episode(name=str(j),seen=104, e_anime=season, path=onepiece_url_generator(ep_number=j))
+        ep.save()
+        
 
 a.save()
 a = Anime(name="My Hero Academia", global_rating = 1, plot="x", season=1, last_episode=13, start_number_episode=1, last_update="2016-06-26",autodownlodable=False, finished = True)
