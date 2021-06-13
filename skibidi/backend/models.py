@@ -1,3 +1,4 @@
+from typing import Protocol
 from django.db import models
 from django.db.models.deletion import CASCADE
 
