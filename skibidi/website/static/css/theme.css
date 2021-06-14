@@ -1479,11 +1479,11 @@ padding-bottom: 10px;
   /* 5 */
   -webkit-appearance: none;
   /* 6 */
-  width: 120px;
+  width: 360px;
   height: 30px;
   padding: 0 0 0 30px;
-  border: 1px solid rgba(0, 0, 0, 0);
-  background: rgba(0, 0, 0, 0);
+  border: 10px solid red(0, 0, 0, 0);
+  background: black;
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
   vertical-align: middle;
@@ -1508,7 +1508,7 @@ border-radius: 4px;
 /* Focus + Active */
 .uk-search-field:focus,
 .uk-search.uk-active .uk-search-field {
-  width: 180px;
+  width: 360px;
 }
 /* Dropdown modifier: `uk-dropdown-search`
  ========================================================================== */
