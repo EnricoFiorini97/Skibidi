@@ -10,10 +10,10 @@ def index(request):
     kind_list = [r[i]['kind_name'] for i in range(len(r))]
 
     query_set = Anime.objects.order_by('name','season')
-    paginator = Paginator(query_set, 15)
+    paginator = Paginator(query_set, 18)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'index.html', {'kind_list':kind_list, 'page_obj':page_obj})
+    return render(request, 'index-2.html', {'kind_list':kind_list, 'page_obj':page_obj})
 
 
 def anime_ep(request, anime, stagione, ep):
@@ -26,7 +26,7 @@ def anime_ep(request, anime, stagione, ep):
         ep_link = r[ep-(int(r[0]['name']))]['path']
     else:
         ep_link = r[ep-1]['path']
-
+    print(ep_link)
     return render(request, 'media.html', {'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':ep_link})
 
 def anime_ep_list(request, anime, stagione):

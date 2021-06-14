@@ -660,7 +660,7 @@ border-radius: 3px;
   background: #222121;
   vertical-align: middle;
   line-height: 30px;
-  min-height: 100px;
+  min-height: 30px;
   font-size: 1rem;
   text-decoration: none;
   text-align: center;
@@ -765,9 +765,9 @@ border-radius: 3px;
 }
 .uk-button-large {
   min-height: 40px;
-  padding: 0 15px;
+  padding: 0 33px;
   line-height: 40px;
-  font-size: 17px;
+  font-size: 15px;
 }
 .uk-button-group {
   display: inline-block;
