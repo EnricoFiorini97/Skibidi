@@ -13,6 +13,7 @@ class AnimeSerializer(serializers.Serializer):
     last_update = serializers.DateField()
     autodownlodable = serializers.BooleanField()
     finished = serializers.BooleanField()
+    #img_source = serializers.FilePathField()
 
 
 class UserSerializer(serializers.Serializer):

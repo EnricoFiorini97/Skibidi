@@ -28,6 +28,7 @@ class Anime(models.Model):
     last_update = models.DateField()
     autodownlodable = models.BooleanField(null=True, blank=True)
     finished = models.BooleanField(null=True, blank=True)
+    img_source = models.FilePathField(null=False)
 
     
 class FavoritesKind(models.Model):

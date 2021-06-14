@@ -94,19 +94,10 @@
                             {% for i in ep_list %}
                             <div>
                                 <div class="uk-overlay uk-overlay-hover">
-                                    <img src="/static/img/Anime/{{anime}} {{stagione}}.jpg" alt="Image" >
-                                    <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>
-                                    <a class="uk-position-cover" href="/anime/{{anime}}/{{stagione}}/{{i}}"></a>
+                                    <a class="uk-button uk-button-primary uk-button-large" href="/anime/{{anime}}/{{stagione}}/{{i}}">Episodio {{i}}</a>
                                 </div>
                                 <div class="uk-panel" >
-                                    
-                                    <h5 class="uk-panel-title">Episodio {{i}}</h5>
-                                    <p>
-                                        <span class="rating">
-                                                <i class="uk-icon-star"></i>
-                                        </span>
-                                        <!--<span class="uk-float-right">2016</span>!-->
-                                    </p>
+
                                 </div>
                             </div>
                             {% endfor %}
