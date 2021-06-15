@@ -2,6 +2,9 @@ from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSe
 from rest_framework import generics
 from backend.models import Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, User
 
+from django.views.generic.edit import CreateView
+from .forms import KindForm, AnimeForm, EpisodeForm
+from django.urls import reverse
 
 class AnimeListAPIView(generics.ListAPIView):
     queryset = Anime.objects.order_by('name','season')
@@ -89,5 +92,27 @@ class AnimeEpisodeListAPIView(generics.ListAPIView):
     def get_queryset(self):
         return Episode.objects.filter(e_anime=self.kwargs['anime_id'])
 
+class KindCreateView(CreateView): 
+    form_class = KindForm
+    model = Kind
+    template_name="form.html"
+
+    def get_success_url(self):
+        return reverse('index')
 
 
+class AnimeCreateView(CreateView):
+    form_class = AnimeForm
+    model = Anime
+    template_name = "form.html"
+
+    def get_success_url(self):
+        return reverse('index')
+
+class AnimeCreateView(CreateView):
+    form_class = EpisodeForm
+    model = Episode
+    template_name = "form.html"
+
+    def get_success_url(self):
+        return reverse('index')

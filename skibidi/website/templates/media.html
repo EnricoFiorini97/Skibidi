@@ -87,17 +87,19 @@
                                     </p>
                                 </div>      
                             </div>
-                            {% if ep > query.start_number_episode%}
-                            <a style="width:335px;" class="uk-button uk-button-primary uk-button-large" href="/anime/{{anime}}/{{stagione}}/{{ep|add:-1}}"><i class=" uk-icon-arrow-left"></i> Episodio precedente</a>
-                            {%else%}
-                            <a style="width:335px;" class="uk-button uk-button-primary uk-button-large"><i class=" uk-icon-arrow-left"></i> Episodio precedente</a>
-                            {% endif %}
-                            <a style="width:335px;" class="uk-button uk-button-primary uk-button-large" href="{{ep_link}}"><i class=" uk-icon-arrow-down"></i> Download</a>
-                            {% if query.last_episode > ep %}
-                            <a style="width:335px;" class="uk-button uk-button-primary uk-button-large" href="/anime/{{anime}}/{{stagione}}/{{ep|add:-1}}"><i class=" uk-icon-arrow-right"></i> Episodio successivo</a>
-                            {% else %}
-                            <a style="width:335px;" class="uk-button uk-button-primary uk-button-large"><i class=" uk-icon-arrow-right"></i> Episodio successivo</a>
-                            {% endif %}
+                            <div class="uk-button-group">
+                                {% if ep > query.start_number_episode%}
+                                <a style="width:337px;" class="uk-button uk-button-primary uk-button-large" href="/anime/{{anime}}/{{stagione}}/{{ep|add:-1}}"><i class=" uk-icon-arrow-left"></i> Episodio precedente</a>
+                                {%else%}
+                                <a style="width:337px;" class="uk-button uk-button-large" disabled><i class=" uk-icon-arrow-left"></i> Episodio precedente</a>
+                                {% endif %}
+                                <a style="width:337px;" class="uk-button uk-button-primary uk-button-large" href="{{ep_link}}"><i class=" uk-icon-arrow-down"></i> Download</a>
+                                {% if query.last_episode > ep %}
+                                <a style="width:337px;" class="uk-button uk-button-primary uk-button-large" href="/anime/{{anime}}/{{stagione}}/{{ep|add:-1}}"><i class=" uk-icon-arrow-right"></i> Episodio successivo</a>
+                                {% else %}
+                                <a style="width:337px;" class="uk-button uk-button-large" disabled><i class=" uk-icon-arrow-right"></i> Episodio successivo</a>
+                                {% endif %}
+                            </div>
                         </div>
                       
 

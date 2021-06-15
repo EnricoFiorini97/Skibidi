@@ -24,11 +24,11 @@ class Anime(models.Model):
     last_episode = models.PositiveSmallIntegerField(null=False)
     start_number_episode = models.PositiveSmallIntegerField(null=False)
     global_rating = models.PositiveSmallIntegerField(null=True, blank=True)
-    path = models.FilePathField(null=True, blank=True)
-    last_update = models.DateField()
+    path = models.URLField(max_length = 255, null=False)
+    last_update = models.DateField(max_length = 255, null=True, blank=True)
     autodownlodable = models.BooleanField(null=True, blank=True)
     finished = models.BooleanField(null=True, blank=True)
-    img_source = models.FilePathField(null=False)
+    img_source = models.CharField(max_length = 255, null=False)
 
     
 class FavoritesKind(models.Model):
