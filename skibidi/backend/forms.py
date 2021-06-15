@@ -1,7 +1,7 @@
 from django import forms
 from .models import Kind, Anime, Episode
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout
+from crispy_forms.layout import Submit, Layout, Field, Div
 from crispy_forms.bootstrap import FormActions
 from django.shortcuts import render
 
@@ -11,7 +11,8 @@ class EpisodeForm(forms.ModelForm):
         super(EpisodeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method='POST'
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.form_name = "Inserisci un Episodio"
+        self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
     
     '''
     def clean_appelation(self):
@@ -36,7 +37,8 @@ class AnimeForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method='POST'
         self.helper.form_class='submit'
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.form_name = "Inserisci un anime"
+        self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
 
     class Meta:
         model = Anime
@@ -48,7 +50,8 @@ class KindForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method='POST'
         self.helper.form_class='submit'
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.form_name = "Inserisci un genere"
+        self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
         
     class Meta:
         model = Kind

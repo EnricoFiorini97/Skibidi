@@ -1,10 +1,13 @@
 from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, UserRatingSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer
 from rest_framework import generics
 from backend.models import Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, User
-
+from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from .forms import KindForm, AnimeForm, EpisodeForm
 from django.urls import reverse
+
+def success(request):
+    return render(request, 'success.html', {'msg': 'Caricamento riuscito!'})
 
 class AnimeListAPIView(generics.ListAPIView):
     queryset = Anime.objects.order_by('name','season')
@@ -98,8 +101,7 @@ class KindCreateView(CreateView):
     template_name="form.html"
 
     def get_success_url(self):
-        return reverse('index')
-
+        return reverse('success')
 
 class AnimeCreateView(CreateView):
     form_class = AnimeForm
@@ -107,12 +109,13 @@ class AnimeCreateView(CreateView):
     template_name = "form.html"
 
     def get_success_url(self):
-        return reverse('index')
+        return reverse('success')
 
-class AnimeCreateView(CreateView):
+class EpisodeCreateView(CreateView):
     form_class = EpisodeForm
     model = Episode
     template_name = "form.html"
 
     def get_success_url(self):
-        return reverse('index')
+        return reverse('success')
+

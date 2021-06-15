@@ -35,7 +35,6 @@ def anime_ep(request, anime, stagione, ep):
 def anime_ep_list(request, anime, stagione):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
     serialized_Anime = AnimeSerializer(querysetAnime[0])
-
     return render(request, 'index_episodes.html',{'k_list':kind_inity(), 'anime':anime, 'season':stagione, 'ep_list':range(serialized_Anime.data["start_number_episode"], serialized_Anime.data["last_episode"]+1)})
 
 def login(request):

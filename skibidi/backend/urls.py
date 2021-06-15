@@ -1,6 +1,7 @@
+from . import views
 from django.urls import path 
 from backend.views import AnimeListAPIView, KindListAPIView, UserFavoritesAnimeListAPIView, UserListAPIView, FavoritesKindListAPIView, FavoritesAnimeListAPIView, WatchingListAPIView, UserRatingListAPIView, KindAnimeListAPIView
-from backend.views import AnimeUniqueListAPIView, EpisodesListAPIView, SeasonsListAPIView, UserFavoritesKindListAPIView, SpecificAnimeKindListAPIView, AnimeEpisodeListAPIView, KindCreateView, AnimeCreateView
+from backend.views import AnimeUniqueListAPIView, EpisodesListAPIView, SeasonsListAPIView, UserFavoritesKindListAPIView, SpecificAnimeKindListAPIView, AnimeEpisodeListAPIView, KindCreateView, AnimeCreateView, EpisodeCreateView
 
 
 urlpatterns = [
@@ -21,5 +22,6 @@ urlpatterns = [
         path('search/serializers/episodes/anime/<str:anime_id>/', AnimeEpisodeListAPIView.as_view()),
         path('create/kind/', KindCreateView.as_view()),
         path('create/anime/', AnimeCreateView.as_view()),
-         path('create/episode/', AnimeCreateView.as_view()),
+        path('create/episode/', EpisodeCreateView.as_view()),
+        path('success/', views.success, name='success'),
 ]

@@ -1,4 +1,3 @@
-{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="it" dir="ltr">
     <head>
@@ -35,17 +34,17 @@
                 </div>
                 <div class="uk-navbar-brand uk-navbar-center uk-visible-small"><i class="uk-icon-small uk-text-primary uk-margin-small-right uk-icon-play-circle"></i> Webflix</div>
             </div>
+
         </nav>
         <nav id="tm-header">
         <nav id="tm-header" class="uk-navbar-container uk-navbar-center">
         <form action="" method="post">
-            {% csrf_token %}
-            <p class="uk-text-bold uk-text-large">{{ form.form_name }}</p>
-            <fieldset style="margin: auto;width: 50%;" class="uk-fieldset uk-width-1-2">
-                {% crispy form %}
+            <fieldset style="margin: auto;width: 50%; border-color: red;" class="uk-fieldset uk-width-1-2">
+                <p style="font-size: 45px; color: red; padding: 10px; line-height: 40px;" class="uk-text-bold uk-text-large">{{msg}}</p>
             </fieldset>
         </form>
     </nav></nav>
+
     </body>
     <footer id="tm-footer" class="uk-block uk-block-secondary uk-block-small ">
         <div class="uk-container-center uk-container">
@@ -58,7 +57,8 @@
                         <li><a href="#">Terms & Conditions</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Contact Us</a></li>
-                    </ul></div>
+                    </ul>
+                </div>
                     <div class="uk-width-medium-2-10">
                         <div class=" uk-float-right"><ul class="uk-subnav">
                             <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-facebook-square"></a></li>
