@@ -12,6 +12,19 @@ class EpisodeForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method='POST'
         self.helper.add_input(Submit('submit', 'Submit'))
+    
+    '''
+    def clean_appelation(self):
+        data = self.cleaned_data['appelation']
+        if data.isdigit():
+             # assume it's an id, and validate as such
+             if not Appelation.objects.filter(pk=data):
+                 raise forms.ValidationError('Invalid Appelation id')
+        else:
+             # assume it's a name
+             if ...:
+                 raise forms.ValidationError('Invalid Appelation name')
+        return data'''
 
     class Meta:
         model = Episode
