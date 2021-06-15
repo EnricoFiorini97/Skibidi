@@ -2,9 +2,10 @@ from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSe
 from rest_framework import generics
 from backend.models import Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, User
 from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import KindForm, AnimeForm, EpisodeForm
 from django.urls import reverse
+
 
 def success(request):
     return render(request, 'success.html', {'msg': 'Caricamento riuscito!'})
@@ -95,6 +96,8 @@ class AnimeEpisodeListAPIView(generics.ListAPIView):
     def get_queryset(self):
         return Episode.objects.filter(e_anime=self.kwargs['anime_id'])
 
+#---- CreateViews----
+
 class KindCreateView(CreateView): 
     form_class = KindForm
     model = Kind
@@ -119,3 +122,53 @@ class EpisodeCreateView(CreateView):
     def get_success_url(self):
         return reverse('success')
 
+#---- UpdateViews----
+
+class EpisodeUpdateView(UpdateView):
+    form_class = EpisodeForm
+    model = Episode
+    template_name = "form.html"
+
+    def get_success_url(self):
+        return reverse('success')
+
+class AnimeUpdateView(UpdateView):
+    form_class = AnimeForm
+    model = Anime
+    template_name = "form.html"
+
+    def get_success_url(self):
+        return reverse('success')
+
+class KindUpdateView(UpdateView):
+    form_class = KindForm
+    model = Kind
+    template_name = "form.html"
+
+    def get_success_url(self):
+        return reverse('success')
+
+#---- DeleteViews----
+
+class KindDeleteView(DeleteView):
+    model = Kind
+    template_name = "confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse('success')
+
+class AnimeDeleteView(DeleteView):
+    model = Anime
+    template_name = "confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse('success')
+
+class EpisodeDeleteView(DeleteView):
+    model = Episode
+    template_name = "confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse('success')
+    
+    

@@ -38,12 +38,11 @@
         </nav>
         <nav id="tm-header">
         <nav id="tm-header" class="uk-navbar-container uk-navbar-center">
-        <form action="" method="post">
-            <fieldset style="margin: auto;width: 50%; border-color: yellowgreen;" class="uk-fieldset uk-width-1-2">
-                <p style="font-size: 45px; color: yellowgreen; padding: 10px; line-height: 40px;" class="uk-text-bold uk-text-large">{{msg}}</p>
-            </fieldset>
-        </form>
-        <div><a class="uk-button uk-button-primary uk-button-large uk-margin-left" href="/admin_control.html"> Torna idietro</a></div>
+            <form method="post">{% csrf_token %}
+                <p>Are you sure you want to delete "{{ object }}"?</p>
+                <input style="width:200px;" class="uk-button uk-button-danger uk-button-large uk-margin-left" type="submit" value="Confirm">
+            </form>
+        <div><a style="width:200px;" class="uk-button uk-button-primary uk-button-large uk-margin-left" href="/admin_control.html"> Torna idietro</a></div>
     </nav></nav>
 
     </body>

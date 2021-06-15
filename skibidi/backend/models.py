@@ -4,31 +4,34 @@ from django.db.models.deletion import CASCADE
 
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length = 255, null=False, unique=True)
-    name = models.CharField(max_length = 255, null=False)
-    surname = models.CharField(max_length = 255, null=False)
+    email = models.EmailField(null=False, unique=True)
+    username = models.CharField(max_length=255, null=False, unique=True)
+    name = models.CharField(max_length=255, null=False)
+    surname = models.CharField(max_length=255, null=False)
 
     
 class Kind(models.Model):
     kind_id = models.AutoField(primary_key=True)
-    kind_name = models.CharField(max_length = 255, null=False, unique=True)
+    kind_name = models.CharField(max_length=255, null=False, unique=True)
 
+    def __str__(self):
+        return f"{self.kind_name}"
 
 class Anime(models.Model):
     class Meta:
         unique_together = (('name', 'season'),)
     anime_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length = 255, null=False)
-    plot = models.CharField(max_length = 1000, null=True, blank=True)
+    name = models.CharField(max_length=255, null=False)
+    plot = models.CharField(max_length=1000, null=True, blank=True)
     season = models.PositiveSmallIntegerField(null=False)
     last_episode = models.PositiveSmallIntegerField(null=False)
     start_number_episode = models.PositiveSmallIntegerField(null=False)
     global_rating = models.PositiveSmallIntegerField(null=True, blank=True)
-    path = models.URLField(max_length = 255, null=False)
-    last_update = models.DateField(max_length = 255, null=True, blank=True)
+    path = models.URLField(max_length=255, null=False)
+    last_update = models.DateField(max_length=255, null=True, blank=True)
     autodownlodable = models.BooleanField(null=True, blank=True)
     finished = models.BooleanField(null=True, blank=True)
-    img_source = models.CharField(max_length = 255, null=False)
+    img_source = models.CharField(max_length=255, null=False)
 
     def __str__(self):
         return f"{self.name} {self.season}"
@@ -45,16 +48,19 @@ class FavoritesAnime(models.Model):
     class Meta:
         unique_together = (('fa_anime', 'fa_user'),)
     favorites_anime_id = models.AutoField(primary_key=True)
-    fa_anime = models.ForeignKey(Anime, related_name= 'fa_anime',on_delete=CASCADE, null=False)
+    fa_anime = models.ForeignKey(Anime, related_name='fa_anime',on_delete=CASCADE, null=False)
     fa_user = models.ForeignKey(User, related_name='fa_user', on_delete=CASCADE, null=False)
 
 
 class Episode(models.Model):
     episode_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length = 255, null=False)
+    name = models.CharField(max_length=255, null=False)
     seen = models.PositiveSmallIntegerField(null=False)
     e_anime = models.ForeignKey(Anime, related_name= 'e_anime',on_delete=CASCADE, null=False)
     path = models.URLField(null=False)
+
+    def __str__(self):
+        return f"{self.e_anime} {self.name}"
 
 
 class Watching(models.Model):

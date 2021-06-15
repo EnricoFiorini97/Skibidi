@@ -1,0 +1,76 @@
+<!--     Include UIKit CSS   -->
+<link rel="stylesheet" href="/static/css/uikit.min.css">
+
+<!--     Theme CSS   -->
+<link rel="stylesheet" href="/static/css/theme.css">
+
+<nav class="uk-navbar uk-navbar-secondary  uk-hidden-small">
+    <div class="uk-container-center uk-container">
+        <ul class="uk-navbar-nav">
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="">Update Anime<i class="uk-icon-angle-down uk-margin-small-left"></i></a>
+                <div class="uk-dropdown uk-dropdown-scrollable uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        {% for q in update_anime %}
+                        <li><a href="/backend/update/anime/{{q.anime_id}}">{{q}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="">Update Kind<i class="uk-icon-angle-down uk-margin-small-left"></i></a>
+                <div class="uk-dropdown uk-dropdown-scrollable uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        {% for q in update_kind %}
+                        <li><a href="/backend/update/anime/{{q.kind_id}}">{{q}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="">Update Episode<i class="uk-icon-angle-down uk-margin-small-left"></i></a>
+                <div class="uk-dropdown uk-dropdown-scrollable uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        {% for q in update_episode %}
+                        <li><a href="/backend/update/anime/{{q.episode_id}}">{{q}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="">Delete Anime<i class="uk-icon-angle-down uk-margin-small-left"></i></a>
+                <div class="uk-dropdown uk-dropdown-scrollable uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        {% for q in update_anime %}
+                        <li><a href="/backend/delete/anime/{{q.anime_id}}">{{q}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="">Delete Kind<i class="uk-icon-angle-down uk-margin-small-left"></i></a>
+                <div class="uk-dropdown uk-dropdown-scrollable uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        {% for q in update_kind %}
+                        <li><a href="/backend/delete/anime/{{q.kind_id}}">{{q}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="">Delete Episode<i class="uk-icon-angle-down uk-margin-small-left"></i></a>
+                <div class="uk-dropdown uk-dropdown-scrollable uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        {% for q in update_episode %}
+                        <li><a href="/backend/delete/anime/{{q.episode_id}}">{{q}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+</nav>
+<script src="static/js/jquery.js"></script>
+<script src="static/js/uikit.min.js"></script>
+<script src="static/js/grid.min.js"></script>

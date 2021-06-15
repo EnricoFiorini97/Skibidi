@@ -45,3 +45,9 @@ def signup(request):
 
 def forgot(request):
     return render(request, 'forgot-password.html')
+
+def admin_control(request):
+    update_anime = Anime.objects.order_by('name','season')
+    update_kind = Kind.objects.all()
+    update_episode = Episode.objects.all()
+    return render(request, 'admin_control.html', {'update_anime':update_anime, 'update_kind':update_kind, 'update_episode':update_episode})
