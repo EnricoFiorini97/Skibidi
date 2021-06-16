@@ -1,11 +1,11 @@
-import env
-import json
-import requests
 from backend.models import Anime, Kind, Episode
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from backend.serializers import KindSerializer, AnimeSerializer, EpisodeSerializer
-
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
 def kind_inity():
     k_list = []
@@ -37,11 +37,6 @@ def anime_ep_list(request, anime, stagione):
     serialized_Anime = AnimeSerializer(querysetAnime[0])
     return render(request, 'index_episodes.html',{'kind_list':kind_inity(), 'anime':anime, 'season':stagione, 'ep_list':range(serialized_Anime.data["start_number_episode"], serialized_Anime.data["last_episode"]+1)})
 
-def login(request):
-    return render(request, 'login.html')
-
-def signup(request):
-    return render(request, 'signup.html')
 
 def forgot(request):
     return render(request, 'forgot-password.html')
@@ -51,3 +46,9 @@ def admin_control(request):
     update_kind = Kind.objects.all()
     update_episode = Episode.objects.all()
     return render(request, 'admin_control.html', {'update_anime':update_anime, 'update_kind':update_kind, 'update_episode':update_episode})
+
+
+class UserCreateView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('index')

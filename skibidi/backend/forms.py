@@ -14,19 +14,6 @@ class EpisodeForm(forms.ModelForm):
         self.form_name = "Inserisci un Episodio"
         self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
     
-    '''
-    def clean_appelation(self):
-        data = self.cleaned_data['appelation']
-        if data.isdigit():
-             # assume it's an id, and validate as such
-             if not Appelation.objects.filter(pk=data):
-                 raise forms.ValidationError('Invalid Appelation id')
-        else:
-             # assume it's a name
-             if ...:
-                 raise forms.ValidationError('Invalid Appelation name')
-        return data'''
-
     class Meta:
         model = Episode
         fields = ['name', 'seen', 'e_anime', 'path']
@@ -57,3 +44,7 @@ class KindForm(forms.ModelForm):
         model = Kind
         fields = ['kind_name']
         
+
+class LoginForm(forms.Form):
+   username = forms.CharField()
+   password = forms.CharField(widget=forms.PasswordInput)

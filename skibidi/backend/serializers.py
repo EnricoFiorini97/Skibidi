@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from backend.models import User, Kind, Anime, Episode
+from backend.models import Role, User, Kind, Anime, Episode
 
 
 class AnimeSerializer(serializers.Serializer):
@@ -13,14 +13,16 @@ class AnimeSerializer(serializers.Serializer):
     last_update = serializers.DateField()
     autodownlodable = serializers.BooleanField()
     finished = serializers.BooleanField()
-    #img_source = serializers.FilePathField()
+    img_source = serializers.CharField(max_length = 1000)
 
 
 class UserSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
     username = serializers.CharField(max_length = 255)
-    name = serializers.CharField(max_length = 255)
-    surname = serializers.CharField(max_length = 255)
+    first_name = serializers.CharField(max_length = 255)
+    last_name = serializers.CharField(max_length = 255)
+    password = serializers.CharField(max_length = 255)
+    u_role = serializers.PrimaryKeyRelatedField(queryset=Role.objects.all())
 
 
 class KindSerializer(serializers.Serializer):

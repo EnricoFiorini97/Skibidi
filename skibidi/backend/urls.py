@@ -4,7 +4,6 @@ from backend.views import AnimeListAPIView, KindListAPIView, UserFavoritesAnimeL
 from backend.views import AnimeUniqueListAPIView, EpisodesListAPIView, SeasonsListAPIView, UserFavoritesKindListAPIView, SpecificAnimeKindListAPIView, AnimeEpisodeListAPIView, KindCreateView, AnimeCreateView, EpisodeCreateView
 from backend.views import EpisodeUpdateView, AnimeUpdateView, KindUpdateView, KindDeleteView, AnimeDeleteView, EpisodeDeleteView
 
-
 urlpatterns = [
         path('search/serializers/anime/all/', AnimeListAPIView.as_view()),
         path('search/serializers/kind/all/', KindListAPIView.as_view()),
@@ -21,6 +20,7 @@ urlpatterns = [
         path('search/serializers/favorites/kind/<str:user_id>/', UserFavoritesKindListAPIView.as_view()),
         path('search/serializers/anime/kind/<str:anime_id>/', SpecificAnimeKindListAPIView.as_view()),
         path('search/serializers/episodes/anime/<str:anime_id>/', AnimeEpisodeListAPIView.as_view()),
+        # ---- from here ----
         path('create/kind/', KindCreateView.as_view()),
         path('create/anime/', AnimeCreateView.as_view()),
         path('create/episode/', EpisodeCreateView.as_view()),

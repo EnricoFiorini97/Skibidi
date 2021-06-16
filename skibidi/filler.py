@@ -1,7 +1,8 @@
 from logging import FATAL
-from backend.models import KindAnime, User, Kind, Anime, FavoritesKind, FavoritesAnime, Watching, UserRating, Episode
+from backend.models import KindAnime, User, Kind, Anime, FavoritesKind, FavoritesAnime, Watching, UserRating, Episode, Role
 from backend.serializers import AnimeSerializer
 from colorama import Fore
+
 
 def img_source_builder(name="One Piece", season="1") -> str:
     return f"static/img/Anime/{name} {season}.jpg"
@@ -64,7 +65,10 @@ def episode_filler(MIRROR_URI=None, use_https=False, anime="One Piece", anime_se
             print(f"{Fore.YELLOW}URLs of {serialized_season.data['name']} Season {serialized_season.data['season']} contain some corrupted URLs!")
     print(f"{Fore.WHITE}Done!")
 
-u = User(username="test", name="name", surname="smith")
+ro = Role(name="Base", description="Roberto")
+ro.save()
+
+u = User(u_role=ro, first_name="Luca", last_name="Pocchione", email="lucapocchione@analbeat.com", username="capocchione", password="pass")
 u.save()
 
 k = Kind(kind_name="shonen")

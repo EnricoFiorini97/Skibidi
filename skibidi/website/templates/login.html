@@ -38,13 +38,13 @@
                     <form  class=" uk-form">
                         <h2 class="uk-margin-large-bottom uk-text-muted">Log in</h2>
                         <div class="uk-form-row">
-                            <div class="uk-form-icon uk-form-icon-flip uk-width-1-1">
-                                <input type="text" class="uk-width-1-1" placeholder="Username">
+                            <!--<div class="uk-form-icon uk-form-icon-flip uk-width-1-1">
+                                <input type="text" class="uk-width-1-1" placeholder="Username" id="username">
                                 <i class="uk-icon-user"></i>
                             </div>                    </div>
                             <div class="uk-form-row">
                                 <div class="uk-form-icon uk-form-icon-flip uk-width-1-1" >
-                                    <input type="password"  class="uk-width-1-1" placeholder="Password">
+                                    <input type="password"  class="uk-width-1-1" placeholder="Password" id="password">
                                     <i class="uk-icon-lock "></i>
                                 </div>                    </div>
                                 <div class="uk-form-row uk-text-small">
@@ -52,9 +52,12 @@
                                     <a class="uk-float-right uk-link " href="/forgot-password.html">Forgot Password?</a>
                                 </div>
                                 <div class="uk-form-row">
-                                    <a class="uk-width-1-1 uk-button uk-button-success uk-button-large" href="#">Log in</a>
+                                    <a class="uk-width-1-1 uk-button uk-button-success uk-button-large" href="/auth/login.html">Log in</a>
                                 </div>
-                                
+                                -->
+                                <form method="post" action="login"
+                                {{form}}
+                                <input type="submit" value="Login">
                             </form>
                         </div>
                     </div>

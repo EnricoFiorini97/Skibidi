@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, UserRatingSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer
 from rest_framework import generics
 from backend.models import Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, User
@@ -5,22 +6,26 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import KindForm, AnimeForm, EpisodeForm
 from django.urls import reverse
+from rest_framework import permissions
 
 
 def success(request):
     return render(request, 'success.html', {'msg': 'Caricamento riuscito!'})
 
 class AnimeListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Anime.objects.order_by('name','season')
     serializer_class = AnimeSerializer
 
 
 class AnimeUniqueListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Anime.objects.filter(season=1)
     serializer_class = AnimeSerializer
 
 
 class SeasonsListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = AnimeSerializer
     
     def get_queryset(self):
@@ -28,6 +33,7 @@ class SeasonsListAPIView(generics.ListAPIView):
 
 
 class EpisodesListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = AnimeSerializer
     
     def get_queryset(self):
@@ -35,41 +41,49 @@ class EpisodesListAPIView(generics.ListAPIView):
  
     
 class KindListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Kind.objects.all()
     serializer_class = KindSerializer
 
 
 class UserListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class FavoritesKindListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = FavoritesKind.objects.all()
     serializer_class = FavoritesKindSerializer
 
 
 class FavoritesAnimeListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = FavoritesAnime.objects.all()
     serializer_class = FavoritesAnimeSerializer
 
 
 class WatchingListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Watching.objects.all()
     serializer_class = WatchingSerializer
 
 
 class UserRatingListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = UserRating.objects.all()
     serializer_class = UserRatingSerializer
 
 
 class KindAnimeListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = KindAnime.objects.all()
     serializer_class = KindAnimeSerializer
 
 
 class UserFavoritesAnimeListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = FavoritesAnimeSerializer
     
     def get_queryset(self):
@@ -77,6 +91,7 @@ class UserFavoritesAnimeListAPIView(generics.ListAPIView):
 
 
 class UserFavoritesKindListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = FavoritesKindSerializer
     
     def get_queryset(self):
@@ -84,6 +99,7 @@ class UserFavoritesKindListAPIView(generics.ListAPIView):
 
 
 class SpecificAnimeKindListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = KindAnimeSerializer
     
     def get_queryset(self):
@@ -91,6 +107,7 @@ class SpecificAnimeKindListAPIView(generics.ListAPIView):
 
 
 class AnimeEpisodeListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = EpisodeSerializer
 
     def get_queryset(self):
@@ -102,6 +119,7 @@ class KindCreateView(CreateView):
     form_class = KindForm
     model = Kind
     template_name="form.html"
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_success_url(self):
         return reverse('success')
@@ -110,11 +128,13 @@ class AnimeCreateView(CreateView):
     form_class = AnimeForm
     model = Anime
     template_name = "form.html"
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_success_url(self):
         return reverse('success')
 
 class EpisodeCreateView(CreateView):
+    permission_classes = [permissions.IsAuthenticated]
     form_class = EpisodeForm
     model = Episode
     template_name = "form.html"
@@ -125,6 +145,7 @@ class EpisodeCreateView(CreateView):
 #---- UpdateViews----
 
 class EpisodeUpdateView(UpdateView):
+    permission_classes = [permissions.IsAuthenticated]
     form_class = EpisodeForm
     model = Episode
     template_name = "form.html"
@@ -133,6 +154,7 @@ class EpisodeUpdateView(UpdateView):
         return reverse('success')
 
 class AnimeUpdateView(UpdateView):
+    permission_classes = [permissions.IsAuthenticated]
     form_class = AnimeForm
     model = Anime
     template_name = "form.html"
@@ -141,6 +163,7 @@ class AnimeUpdateView(UpdateView):
         return reverse('success')
 
 class KindUpdateView(UpdateView):
+    permission_classes = [permissions.IsAuthenticated]
     form_class = KindForm
     model = Kind
     template_name = "form.html"
@@ -151,6 +174,7 @@ class KindUpdateView(UpdateView):
 #---- DeleteViews----
 
 class KindDeleteView(DeleteView):
+    permission_classes = [permissions.IsAuthenticated]
     model = Kind
     template_name = "confirm_delete.html"
 
@@ -158,6 +182,7 @@ class KindDeleteView(DeleteView):
         return reverse('success')
 
 class AnimeDeleteView(DeleteView):
+    permission_classes = [permissions.IsAuthenticated]
     model = Anime
     template_name = "confirm_delete.html"
 
@@ -165,10 +190,9 @@ class AnimeDeleteView(DeleteView):
         return reverse('success')
 
 class EpisodeDeleteView(DeleteView):
+    permission_classes = [permissions.IsAuthenticated]
     model = Episode
     template_name = "confirm_delete.html"
 
     def get_success_url(self):
         return reverse('success')
-    
-    

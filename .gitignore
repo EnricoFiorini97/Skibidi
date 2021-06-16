@@ -6,5 +6,5 @@ skibidi/__pycache__/**
 skibidi/backend/__pycache__/**
 skibidi/skibidi/__pycache__/**
 skibidi/website/__pycache__/**
-skibidi/website/migrations/__pycache__/**
+skibidi/website/migrations/**
 skibidi/static/**
