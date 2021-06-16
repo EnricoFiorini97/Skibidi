@@ -22,9 +22,6 @@
         <nav id="tm-header" class="uk-navbar ">
             <div class="uk-container uk-container-center ">
                 <a  href = "/"><img class="uk-margin uk-margin-remove" width="200" height="40" alt="logo" src="/static/img/logo.jpg"/></a>
-
-                
-                
                 <div class="uk-navbar-flip uk-hidden-small">
                     <div class="uk-button-group">
                         <a class="uk-button uk-button-primary uk-button-small" href="/signup.html">Sign up</a>
@@ -78,12 +75,16 @@
                             <div>
                                 <div class="uk-overlay uk-overlay-hover">
                                     <img src="static/img/Anime/{{page.name}} {{page.season}}.jpg" alt="Image" >
-                                    <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>
+                                    <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon">
+                                        <h5 style="word-wrap: break-word;line-height:40px;align-content: center; font-size:25px; color:white;" class="uk-overlay">{{page.name}} {{page.season}}</h5>
+                                    </div>
                                     <a class="uk-position-cover" href="/anime/{{page.name}}/{{page.season}}"></a>
                                 </div>
                                 <div class="uk-panel" >
-                                    <h5 class="uk-panel-title">{{page.name}} {{page.season}}</h5>
+                                    <h5 style="word-wrap: break-word;line-height:40px;align-content: center; color:white;" class="uk-overlay">{{page.name}} {{page.season}}</h5>
+                                    
                                     <p>
+                                         <!--
                                         <span class="rating">
                                             {% with ''|center:page.global_rating as range %}
                                             {% for _ in range %}
@@ -91,7 +92,7 @@
                                             {% endfor %}
                                             {% endwith %}
                                         </span>
-                                        <!--<span class="uk-float-right">2016</span>!-->
+                                       <span class="uk-float-right">2016</span>!-->
                                     </p>
                                 </div>
                             </div>
