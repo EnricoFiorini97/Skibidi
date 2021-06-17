@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from website.views import UserCreateView
+from website.views import UserCreateView, CustomLogin
 
 urlpatterns = [
         path('',views.index, name='index'),
@@ -10,5 +10,5 @@ urlpatterns = [
         path('signup.html', UserCreateView.as_view()),
         path('forgot-password.html', views.forgot),
         path('admin_control.html', views.admin_control),
-        path('login.html', auth_views.LoginView.as_view(), name='login'),
+        path('login.html', CustomLogin.as_view(), name='login'),
 ]       

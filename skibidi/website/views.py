@@ -2,10 +2,11 @@ from backend.models import Anime, Kind, Episode
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from backend.serializers import KindSerializer, AnimeSerializer, EpisodeSerializer
-from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
+from backend.forms import AuthForm, UserCreateForm
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth import views as auth_views
 
 def kind_inity():
     k_list = []
@@ -22,7 +23,6 @@ def index(request):
     page_obj = paginator.get_page(page_number)
     return render(request, 'index-2.html', {'kind_list':kind_inity, 'page_obj':page_obj})
 
-
 def anime_ep(request, anime, stagione, ep):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
     for q in querysetAnime:
@@ -37,7 +37,6 @@ def anime_ep_list(request, anime, stagione):
     serialized_Anime = AnimeSerializer(querysetAnime[0])
     return render(request, 'index_episodes.html',{'kind_list':kind_inity(), 'anime':anime, 'season':stagione, 'ep_list':range(serialized_Anime.data["start_number_episode"], serialized_Anime.data["last_episode"]+1)})
 
-
 def forgot(request):
     return render(request, 'forgot-password.html')
 
@@ -47,8 +46,11 @@ def admin_control(request):
     update_episode = Episode.objects.all()
     return render(request, 'admin_control.html', {'update_anime':update_anime, 'update_kind':update_kind, 'update_episode':update_episode})
 
+class CustomLogin(auth_views.LoginView):
+    form_class = AuthForm
+    template_name = 'registration/login.html'
 
 class UserCreateView(CreateView):
-    form_class = UserCreationForm
+    form_class = UserCreateForm
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('index')

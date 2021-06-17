@@ -1,5 +1,6 @@
 mysql -u root -p < "db_instance_creator.sql"
 rm -rf backend/migrations
+rm -rf website/migrations
 python3 manage.py makemigrations backend
 python3 manage.py makemigrations website
 python3 manage.py migrate
