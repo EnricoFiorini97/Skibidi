@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -145,3 +147,9 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env.MY_GOOGLE
+EMAIL_HOST_PASSWORD = env.MY_GOOGLE_PASS
+DEFAULT_FROM_EMAIL = env.MY_GOOGLE

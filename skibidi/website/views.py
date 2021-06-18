@@ -3,10 +3,11 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from backend.serializers import KindSerializer, AnimeSerializer, EpisodeSerializer
 from django.contrib.auth.forms import UserCreationForm
-from backend.forms import AuthForm, UserCreateForm
+from backend.forms import AuthForm, UserCreateForm, PwdResetForm
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.tokens import default_token_generator
 
 def kind_inity():
     k_list = []
@@ -37,9 +38,6 @@ def anime_ep_list(request, anime, stagione):
     serialized_Anime = AnimeSerializer(querysetAnime[0])
     return render(request, 'index_episodes.html',{'kind_list':kind_inity(), 'anime':anime, 'season':stagione, 'ep_list':range(serialized_Anime.data["start_number_episode"], serialized_Anime.data["last_episode"]+1)})
 
-def forgot(request):
-    return render(request, 'forgot-password.html')
-
 def admin_control(request):
     update_anime = Anime.objects.order_by('name','season')
     update_kind = Kind.objects.all()
@@ -49,6 +47,12 @@ def admin_control(request):
 class CustomLogin(auth_views.LoginView):
     form_class = AuthForm
     template_name = 'registration/login.html'
+    def form_valid(self, form):
+        remember = form.cleaned_data['remember_me']
+        if not remember:
+            self.request.session.set_expiry(604800)
+            self.request.session.modified = True
+        return super(CustomLogin, self).form_valid(form)
 
 class UserCreateView(CreateView):
     form_class = UserCreateForm

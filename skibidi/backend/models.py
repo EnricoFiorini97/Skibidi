@@ -7,7 +7,9 @@ class Role(models.Model):
     role_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, null=False, unique=True)
     description = models.CharField(max_length=255, null=False)
-
+   
+    def __str__(self):
+        return f"{self.name}"
 
 class User(User):
     user_id = models.AutoField(primary_key=True)
@@ -47,6 +49,8 @@ class FavoritesKind(models.Model):
     fk_user = models.ForeignKey(User, related_name='fk_user', on_delete=CASCADE, null=False)
     fk_kind = models.ForeignKey(Kind, related_name='fk_kind', on_delete=CASCADE, null=False)
 
+    def __str__(self):
+        return f"{self.fk_user} {self.fk_kind}"
     
 class FavoritesAnime(models.Model):
     class Meta:
@@ -55,6 +59,8 @@ class FavoritesAnime(models.Model):
     fa_anime = models.ForeignKey(Anime, related_name='fa_anime',on_delete=CASCADE, null=False)
     fa_user = models.ForeignKey(User, related_name='fa_user', on_delete=CASCADE, null=False)
 
+    def __str__(self):
+        return f"{self.fa_anime} {self.fa_user}"
 
 class Episode(models.Model):
     episode_id = models.AutoField(primary_key=True)
@@ -76,6 +82,8 @@ class Watching(models.Model):
     w_episode = models.ForeignKey(Episode, related_name= 'w_episode',on_delete=CASCADE, null=False)
     seconds = models.PositiveSmallIntegerField(null=False, default=0) #TODO: convert to hh-mm-ss
 
+    def __str__(self):
+        return f"{self.w_anime} {self.w_episode} dell'utente {self.w_user}"
 
 class UserRating(models.Model):
     class Meta:
@@ -84,7 +92,8 @@ class UserRating(models.Model):
     ur_anime = models.ForeignKey(Anime, related_name='ur_anime', on_delete=CASCADE, null=False)
     ur_user = models.ForeignKey(User, related_name='ur_user' ,on_delete=CASCADE, null=False)
     rating = models.PositiveSmallIntegerField(null=False)
-
+    def __str__(self):
+        return f"{self.ur_anime} {self.ur_user}"
 
 class KindAnime(models.Model):
     class Meta:
@@ -92,3 +101,6 @@ class KindAnime(models.Model):
     kind_anime_id = models.AutoField(primary_key=True)
     ka_anime = models.ForeignKey(Anime, related_name='ka_anime', on_delete=CASCADE, null=False)
     ka_kind = models.ForeignKey(Kind, related_name='ka_kind', on_delete=CASCADE, null=False)
+
+    def __str__(self):
+        return f"{self.ka_anime} {self.ka_kind}"
