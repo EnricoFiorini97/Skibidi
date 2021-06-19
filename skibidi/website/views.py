@@ -1,13 +1,13 @@
-from backend.models import Anime, Kind, Episode
+from django.views.generic.list import ListView
+from backend.models import Anime, Kind, Episode, Watching
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from backend.serializers import KindSerializer, AnimeSerializer, EpisodeSerializer
-from django.contrib.auth.forms import UserCreationForm
-from backend.forms import AuthForm, UserCreateForm, PwdResetForm
+from backend.forms import AuthForm, UserCreateForm, MainForm
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth import views as auth_views
-from django.contrib.auth.tokens import default_token_generator
+from django.views.decorators.http import require_http_methods
 
 def kind_inity():
     k_list = []
@@ -17,12 +17,18 @@ def kind_inity():
         k_list.append(serialized_kind.data["kind_name"])
     return k_list
 
+
 def index(request):
-    query_set = Anime.objects.order_by('name','season')
-    paginator = Paginator(query_set, 18)
+    form = MainForm()
+    if request.GET.get('search') != None:
+        query_set = Anime.objects.filter(name__icontains=request.GET.get('search'))
+        paginator = Paginator(query_set, len(query_set))
+    else:
+        query_set = Anime.objects.order_by('name','season')
+        paginator = Paginator(query_set, 18)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'index-2.html', {'kind_list':kind_inity, 'page_obj':page_obj})
+    return render(request, 'index.html', {'form':form, 'kind_list':kind_inity, 'page_obj':page_obj})
 
 def anime_ep(request, anime, stagione, ep):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
@@ -30,8 +36,12 @@ def anime_ep(request, anime, stagione, ep):
         if AnimeSerializer(q).data["name"] == anime and AnimeSerializer(q).data["season"] == stagione: 
             identify = AnimeSerializer(q).data['anime_id']
     querysetEpisode = Episode.objects.filter(e_anime=identify, name=str(ep))
+    
+    Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
+    
     serialized_Episode = EpisodeSerializer(querysetEpisode[0])
-    return render(request, 'media.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"]})
+    visual = serialized_Episode.data['seen']
+    return render(request, 'media.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
 
 def anime_ep_list(request, anime, stagione):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
@@ -42,7 +52,17 @@ def admin_control(request):
     update_anime = Anime.objects.order_by('name','season')
     update_kind = Kind.objects.all()
     update_episode = Episode.objects.all()
-    return render(request, 'admin_control.html', {'update_anime':update_anime, 'update_kind':update_kind, 'update_episode':update_episode})
+    return render(request, 'admin_1.html', {'update_anime':update_anime, 'update_kind':update_kind, 'update_episode':update_episode})
+
+def staff_create(request):
+    return render(request, 'admin_create.html')
+
+def staff_update(request):
+    return render(request, 'admin_update.html')
+
+def staff_delete(request):
+    return render(request, 'admin_delete.html')
+
 
 class CustomLogin(auth_views.LoginView):
     form_class = AuthForm

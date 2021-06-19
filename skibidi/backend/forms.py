@@ -237,4 +237,14 @@ class PwdChangeForm(SetPasswordForm):
         help_text=("Inserisci di nuovo la password"),
     )
 
-    
+class MainForm(forms.Form):
+    search = forms.CharField(max_length=100,label='', widget=forms.TextInput(attrs={'class':'uk-search-field','type':'search','placeholder': 'Search'}))
+
+    @property
+    def helper(self):
+        helper = FormHelper()
+        helper.form_id='Submit_research'
+        helper.form_class='submit'
+        helper.disable_csrf = True
+
+        return helper

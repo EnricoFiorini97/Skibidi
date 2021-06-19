@@ -37,7 +37,7 @@ urlpatterns = [
         # ---- Update ----
         path('update/episode/<pk>/', EpisodeUpdateView.as_view()),
         path('update/anime/<pk>/', AnimeUpdateView.as_view()),
-        path('update/kind/<pk>/', KindUpdateView.as_view()),
+        path('update/kind/<int:pk>/', KindUpdateView.as_view()),
         path('update/favorites/anime/<pk>/', FavoritesAnimeUpdateView.as_view()),
         path('update/role/<pk>/', RoleUpdateView.as_view()),
         path('update/user/<pk>/', UserUpdateView.as_view()),
