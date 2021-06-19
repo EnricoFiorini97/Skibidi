@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from backend.models import Role, User, Kind, Anime, Episode
+from backend.models import  Kind, Anime, Episode
+from django.contrib.auth import get_user_model
 
 
 class AnimeSerializer(serializers.Serializer):
@@ -23,8 +24,6 @@ class UserSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length = 255)
     last_name = serializers.CharField(max_length = 255)
     password = serializers.CharField(max_length = 255)
-    u_role = serializers.PrimaryKeyRelatedField(queryset=Role.objects.all())
-
 
 class KindSerializer(serializers.Serializer):
     kind_id = serializers.IntegerField()
@@ -33,19 +32,19 @@ class KindSerializer(serializers.Serializer):
 
 class FavoritesKindSerializer(serializers.Serializer):
     favorites_kind_id = serializers.IntegerField()
-    fk_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    fk_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
     fk_kind = serializers.PrimaryKeyRelatedField(queryset=Kind.objects.all())
 
 
 class FavoritesAnimeSerializer(serializers.Serializer):
     favorites_anime_id = serializers.IntegerField()
     fa_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
-    fa_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    fa_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
 
 
 class WatchingSerializer(serializers.Serializer):
     watching_id = serializers.IntegerField()
-    w_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    w_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
     w_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
     w_episode = serializers.PrimaryKeyRelatedField(queryset=Episode.objects.all())
     seconds = serializers.IntegerField()
@@ -54,7 +53,7 @@ class WatchingSerializer(serializers.Serializer):
 class UserRatingSerializer(serializers.Serializer):
     user_rating_id = serializers.IntegerField()
     ur_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
-    ur_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    ur_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
     rating = serializers.IntegerField()
 
 

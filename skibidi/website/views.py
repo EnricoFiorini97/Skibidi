@@ -1,5 +1,3 @@
-from django.views.generic.list import ListView
-from backend.models import Anime, Kind, Episode, Watching
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from backend.serializers import KindSerializer, AnimeSerializer, EpisodeSerializer
@@ -7,7 +5,8 @@ from backend.forms import AuthForm, UserCreateForm, MainForm
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth import views as auth_views
-from django.views.decorators.http import require_http_methods
+from backend.models import Kind, Anime, Episode
+
 
 def kind_inity():
     k_list = []
@@ -49,10 +48,12 @@ def anime_ep_list(request, anime, stagione):
     return render(request, 'index_episodes.html',{'kind_list':kind_inity(), 'anime':anime, 'season':stagione, 'ep_list':range(serialized_Anime.data["start_number_episode"], serialized_Anime.data["last_episode"]+1)})
 
 def admin_control(request):
-    update_anime = Anime.objects.order_by('name','season')
-    update_kind = Kind.objects.all()
-    update_episode = Episode.objects.all()
-    return render(request, 'admin_1.html', {'update_anime':update_anime, 'update_kind':update_kind, 'update_episode':update_episode})
+    if request.user.is_authenticated and request.user.is_staff:
+        update_anime = Anime.objects.order_by('name','season')
+        update_kind = Kind.objects.all()
+        update_episode = Episode.objects.all()
+        return render(request, 'admin_1.html', {'update_anime':update_anime, 'update_kind':update_kind, 'update_episode':update_episode})
+    return render(request, 'forbidden.html')
 
 def staff_create(request):
     return render(request, 'admin_create.html')
@@ -73,6 +74,9 @@ class CustomLogin(auth_views.LoginView):
             self.request.session.set_expiry(604800)
             self.request.session.modified = True
         return super(CustomLogin, self).form_valid(form)
+
+class CustomLogout(auth_views.LogoutView):
+    template_name = 'registration/logout.html'
 
 class UserCreateView(CreateView):
     form_class = UserCreateForm

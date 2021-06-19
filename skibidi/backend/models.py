@@ -1,21 +1,9 @@
 from typing import Protocol
 from django.db import models
-from django.db.models.deletion import CASCADE, SET_NULL
+from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import User
 
-class Role(models.Model):
-    role_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255, null=False, unique=True)
-    description = models.CharField(max_length=255, null=False)
-   
-    def __str__(self):
-        return f"{self.name}"
 
-class User(User):
-    user_id = models.AutoField(primary_key=True)
-    u_role = models.ForeignKey(Role, related_name='u_role', on_delete=CASCADE, null=False)
-
-    
 class Kind(models.Model):
     kind_id = models.AutoField(primary_key=True)
     kind_name = models.CharField(max_length=255, null=False, unique=True)

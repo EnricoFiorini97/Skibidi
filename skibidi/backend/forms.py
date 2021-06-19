@@ -1,10 +1,7 @@
 from django import forms
-from .models import KindAnime, UserRating, FavoritesAnime, Kind, Anime, Episode, Role, FavoritesKind, Watching
-from .models import User as UserModel
+from .models import KindAnime, UserRating, FavoritesAnime, Kind, Anime, Episode, FavoritesKind, Watching
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from django.shortcuts import render
-from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -95,18 +92,6 @@ class UserRatingForm(forms.ModelForm):
         model = UserRating
         fields = ['ur_anime', 'ur_user', 'rating']
 
-class RoleForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(RoleForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_method='POST'
-        self.helper.form_class='submit'
-        self.form_name = "Aggiungi ruolo"
-        self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
-
-    class Meta:
-        model = Role
-        fields = ['name', 'description']
 
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -118,8 +103,8 @@ class UserForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
 
     class Meta:
-        model = UserModel
-        fields = ['username', 'password','first_name', 'last_name','email', 'u_role']
+        model = User
+        fields = ['username', 'password','first_name', 'last_name','email']
 
 class WatchingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -196,11 +181,12 @@ class UserCreateForm(UserCreationForm):
             )
         return password2
     
-    def save(self):
-        ro = Role.objects.get(name="Base")
-        user_db = UserModel(u_role=ro, email=self.cleaned_data.get("email"), username=self.cleaned_data.get("username"), password=self.cleaned_data.get("password1"))
-        user_db.save()
-        return user_db
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
         
 class PwdResetForm(PasswordResetForm):
