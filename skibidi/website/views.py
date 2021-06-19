@@ -64,7 +64,6 @@ def staff_update(request):
 def staff_delete(request):
     return render(request, 'admin_delete.html')
 
-
 class CustomLogin(auth_views.LoginView):
     form_class = AuthForm
     template_name = 'registration/login.html'
@@ -75,8 +74,6 @@ class CustomLogin(auth_views.LoginView):
             self.request.session.modified = True
         return super(CustomLogin, self).form_valid(form)
 
-class CustomLogout(auth_views.LogoutView):
-    template_name = 'registration/logout.html'
 
 class UserCreateView(CreateView):
     form_class = UserCreateForm

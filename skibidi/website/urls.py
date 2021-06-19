@@ -1,7 +1,8 @@
+from backend.views import success
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from website.views import UserCreateView, CustomLogin, CustomLogout
+from website.views import UserCreateView, CustomLogin
 from backend.forms import PwdResetForm, PwdChangeForm
 from django.contrib.auth import views as auth_views
 
@@ -16,7 +17,7 @@ urlpatterns = [
         path('reset/password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name = "registration/passwordreset_done.html"), name ='password_reset_complete'),
         path('admin_control.html', views.admin_control),
         path('login.html', CustomLogin.as_view(), name='login'),
-        path('logout.html', CustomLogout.as_view(), name='logout'),
+        path('logout.html', auth_views.LogoutView.as_view(), name="logout"),
         path('staff/create/', views.staff_create),
         path('staff/update/', views.staff_update),
         path('staff/delete/', views.staff_delete),
