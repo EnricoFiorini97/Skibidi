@@ -18,7 +18,7 @@ class AnimeSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.Serializer):
-    user_id = serializers.IntegerField()
+    id = serializers.IntegerField()
     username = serializers.CharField(max_length = 255)
     email = serializers.CharField(max_length = 255)
     first_name = serializers.CharField(max_length = 255)

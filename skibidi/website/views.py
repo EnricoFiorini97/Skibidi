@@ -56,13 +56,20 @@ def admin_control(request):
     return render(request, 'forbidden.html')
 
 def staff_create(request):
-    return render(request, 'admin_create.html')
+    if request.user.is_authenticated and request.user.is_staff:
+        return render(request, 'admin_create.html')
+    return render(request, 'forbidden.html')
 
 def staff_update(request):
-    return render(request, 'admin_update.html')
+    if request.user.is_authenticated and request.user.is_staff:
+        return render(request, 'admin_update.html')
+    return render(request, 'forbidden.html')
+
 
 def staff_delete(request):
-    return render(request, 'admin_delete.html')
+    if request.user.is_authenticated and request.user.is_staff:
+        return render(request, 'admin_delete.html')
+    return render(request, 'forbidden.html')
 
 class CustomLogin(auth_views.LoginView):
     form_class = AuthForm
