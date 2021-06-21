@@ -69,3 +69,8 @@ class EpisodeSerializer(serializers.Serializer):
     seen = serializers.IntegerField()
     e_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
     path = serializers.URLField()
+
+class PersonalKindSerializer(serializers.Serializer):
+    personal_kind_id = serializers.IntegerField()
+    p_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
+    p_kind = serializers.PrimaryKeyRelatedField(queryset=Kind.objects.all())

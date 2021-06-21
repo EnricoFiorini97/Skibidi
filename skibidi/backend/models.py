@@ -71,7 +71,7 @@ class Watching(models.Model):
     seconds = models.PositiveSmallIntegerField(null=False, default=0) #TODO: convert to hh-mm-ss
 
     def __str__(self):
-        return f"{self.w_anime} {self.w_episode} dell'utente {self.w_user}"
+        return f"{self.w_episode}"
 
 class UserRating(models.Model):
     class Meta:
@@ -92,3 +92,13 @@ class KindAnime(models.Model):
 
     def __str__(self):
         return f"{self.ka_anime} {self.ka_kind}"
+
+class PersonalKind(models.Model):
+    class Meta:
+        unique_together = (('p_user', 'p_kind'),)
+    personal_kind_id = models.AutoField(primary_key=True)
+    p_user = models.ForeignKey(User, related_name='p_user' ,on_delete=CASCADE, null=False)
+    p_kind = models.ForeignKey(Kind, related_name='p_kind', on_delete=CASCADE, null=False)
+
+    def __str__(self):
+        return f"{self.p_kind}"

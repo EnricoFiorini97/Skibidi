@@ -1,5 +1,5 @@
 from django import forms
-from .models import KindAnime, UserRating, FavoritesAnime, Kind, Anime, Episode, FavoritesKind, Watching
+from .models import PersonalKind, KindAnime, UserRating, FavoritesAnime, Kind, Anime, Episode, FavoritesKind, Watching
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordResetForm, SetPasswordForm
@@ -234,3 +234,15 @@ class MainForm(forms.Form):
         helper.disable_csrf = True
 
         return helper
+
+class PersonalKindForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PersonalKindForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method='POST'
+        self.form_name = "Inserisci un genere per utente"
+        self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
+    
+    class Meta:
+        model = PersonalKind
+        fields = ['p_user', 'p_kind']

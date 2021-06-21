@@ -1,18 +1,18 @@
 from django.http.response import HttpResponse
-from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, UserRatingSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer
+from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, UserRatingSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer, PersonalKindSerializer
 from rest_framework import generics
-from backend.models import  Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime
+from backend.models import  Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, PersonalKind
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import WatchingForm, KindForm, AnimeForm, EpisodeForm, FavoritesAnimeForm, FavoritesKindForm, KindAnimeForm, UserRatingForm
+from .forms import WatchingForm, KindForm, AnimeForm, EpisodeForm, FavoritesAnimeForm, FavoritesKindForm, KindAnimeForm, UserRatingForm, PersonalKindForm
 from django.urls import reverse
 from rest_framework import permissions
-
+from django.contrib.auth import get_user_model
 
 def success(request):
-    return render(request, 'success.html', {'msg': 'Caricamento riuscito!'})
+    return render(request, 'success.html', {'msg': 'Operazione riuscita!'})
 
 class AnimeListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
@@ -181,7 +181,16 @@ class WatchingCreateView(CreateView):
     template_name = "form.html"
 
     def get_success_url(self):
-        return reverse('success')    
+        return reverse('success')
+
+class PersonalKindCreateView(CreateView):
+    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
+    form_class = PersonalKindForm
+    model = PersonalKind
+    template_name = "form.html"
+
+    def get_success_url(self):
+        return reverse('success')                
 #---- UpdateViews----
 
 class EpisodeUpdateView(UpdateView):
@@ -266,6 +275,14 @@ class WatchingUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('success')  
 
+class PersonalKindUpdateView(UpdateView):
+    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
+    form_class = PersonalKindForm
+    model = PersonalKind
+    template_name = "form.html"
+
+    def get_success_url(self):
+        return reverse('success') 
 #---- DeleteViews----
 
 class KindDeleteView(DeleteView):
@@ -340,3 +357,25 @@ class WatchingDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('success')  
+
+class PersonalKindDeleteView(DeleteView):
+    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
+    model = PersonalKind
+    template_name = "confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse('success')  
+
+
+def add_personal(request, user, kind):
+    p_user = User.objects.get(username=user)
+    p_kind = Kind.objects.get(kind_name=kind)
+    p = PersonalKind(p_user=p_user, p_kind=p_kind)
+    p.save()
+    return redirect('/profile/')
+
+def del_personal(request, user, kind):
+    p_user = User.objects.get(username=user)
+    p_kind = Kind.objects.get(kind_name=kind)
+    PersonalKind.objects.filter(p_user=p_user, p_kind=p_kind).delete()
+    return redirect('/profile/')
