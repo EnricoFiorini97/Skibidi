@@ -7,21 +7,195 @@
                     <div id="tm-right-section" class="uk-width-large-1-2 uk-width-medium-1-2 uk-container-center"  data-uk-scrollspy="{cls:'uk-animation-fade', target:'img'}">
                             <div class="uk-container uk-container-center uk-margin-large-top">
                                 <h1 class="text-center">Cosa vuoi fare?</h1>
+                               <div>
+                                    <input type="text" name="input" placeholder="Item da modificare (es. shonen).." id="param_input">
+                                </div>
+                                <script>
+                                    function backend_redirect_kind()
+                                    {
+                                        var param = document.getElementById("param_input").value;
+                                        
+                                        if (param === "" || !param || param.length === 0 || !param.trim())
+                                        {
+                                            alert("Il parametro di ricerca deve essere una stringa non-nulla e di caratteri validi!");
+                                            return;
+                                        }
+
+                                        var api_json_view = "/backend/search/serializers/kind/all/";
+                                        var base_url = "/backend/delete/kind/";
+                                        var validParam = false;
+                                        var pk = -1;
+
+                                        $.getJSON(api_json_view, function(data) {
+                                            for (i = 0; i < data.length; ++i)
+                                            {
+                                                if (data[i].kind_name.toUpperCase() == param.toUpperCase())
+                                                {
+                                                    validParam = true;
+                                                    pk = data[i].kind_id;
+                                                }
+                                            }
+                                            if (validParam)
+                                                window.location.replace(base_url + pk);
+                                            else
+                                                alert("Il genere selezinato non esiste.");
+                                        });
+                                    }
+
+                                    function backend_redirect_anime()
+                                    {
+                                        var param = document.getElementById("param_input").value;
+                                        
+                                        if (param === "" || !param || param.length === 0 || !param.trim())
+                                        {
+                                            alert("Il parametro di ricerca deve essere una stringa non-nulla e di caratteri validi!");
+                                            return;
+                                        }
+
+                                        const regex = /\d/;
+
+                                        if (!regex.test(param))
+                                        {
+                                            alert("Il parametro di ricerca per gli anime deve contenere anche la stagione Formato[Nome Anime (spazio) Stagione]!")
+                                            return;
+                                        }
+
+                                        var api_json_view = "/backend/search/serializers/anime/all/";
+                                        var base_url = "/backend/delete/anime/";
+                                        var validParam = false;
+                                        var pk = -1;
+                                        
+                                        $.getJSON(api_json_view, function(data) {
+                                            for (i = 0; i < data.length; ++i)
+                                            {
+                                                if ((data[i].name + " " + data[i].season).toUpperCase() == param.toUpperCase())
+                                                {
+                                                    validParam = true;
+                                                    pk = data[i].anime_id;
+                                                }
+                                            }
+                                            if (validParam)
+                                                window.location.replace(base_url + pk);
+                                            else
+                                                alert("L'anime selezinato non esiste.");
+                                        });
+                                    }
+
+                                    function backend_redirect_episode()
+                                    {
+                                        var param = document.getElementById("param_input").value;
+                                        
+                                        if (param === "" || !param || param.length === 0 || !param.trim())
+                                        {
+                                            alert("Il parametro di ricerca deve essere una stringa non-nulla e di caratteri validi!");
+                                            return;
+                                        }
+
+                                        const regex = /\d/;
+
+                                        if (!regex.test(param))
+                                        {
+                                            alert("Il parametro di ricerca per gli anime deve contenere anche la stagione e il numero di episodio da modificare [Nome Anime (spazio) Stagione (spazio) Episodio]!")
+                                            return;
+                                        }
+                                            
+                                        var api_json_anime = "/backend/search/serializers/anime/all/";
+                                        var api_json_view = "/backend/search/serializers/episodes/anime/";
+                                        var base_url = "/backend/delete/episode/";
+                                        var validAnime = false;
+                                        var pk = -1;
+                                        var pk_anime = -1;
+
+                                        var param_list = param.split(" ");
+
+                                        var anime_name = "";
+                                        var season = -1;
+                                        var episode = -1;
+                                        console.log(param_list);
+
+                                        for (i = 0; i < param_list.length; ++i)
+                                        {
+                                            if (param_list[i] == '')
+                                                continue;
+                                            
+                                            if (!regex.test(param_list[i]))
+                                            {
+                                                if (anime_name == "")
+                                                    anime_name += param_list[i];
+                                                else
+                                                    anime_name = anime_name + " " + param_list[i];
+                                            }
+                                                
+                                            if (regex.test(param_list[i]))
+                                            {
+                                                if (season == -1)
+                                                    season = param_list[i]
+                                                else
+                                                    episode = param_list[i];
+                                            }
+                                        }
+                                        
+                                        console.log("episode = " + episode);
+                                        var anime_and_season = anime_name + " " + season;
+                                        console.log("anime name and season = " + anime_and_season)
+
+                                        $.ajax({
+                                            async: false,
+                                            success: function ()
+                                            {                                         
+                                                $.getJSON(api_json_anime, function(data) {
+                                                    for (i = 0; i < data.length; ++i)
+                                                    {
+                                                        if ((data[i].name + " " + data[i].season).toUpperCase() == anime_and_season.toUpperCase())
+                                                        {
+                                                            validAnime = true;
+                                                            pk_anime = data[i].anime_id;
+                                                        }
+                                                    }
+                                                    if (!validAnime)
+                                                    {
+                                                        alert("L'anime selezinato non esiste.");
+                                                        return;
+                                                    }
+                                                    var validEpisode = false;  
+                                                    $.getJSON((api_json_view + pk_anime), function(k_data){
+                                                        console.log(api_json_view + pk_anime);
+                                                        for (i = 0; i < k_data.length; ++i)
+                                                        {
+                                                            console.log("curr = " + k_data[i].name);
+                                                            if (k_data[i].name == episode)
+                                                            {
+                                                                validEpisode = true;
+                                                                pk = k_data[i].episode_id
+                                                            }
+                                                        }
+
+                                                        if (validEpisode)
+                                                            window.location.replace(base_url + pk);
+                                                        else
+                                                            alert("L'episodio dell'anime selezinato non esiste.");
+                                                    });
+                                                });
+                                            }
+                                        });
+                                    }
+                                </script>
                                 <div>
-                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" href="/backend/delete/kind/1/">Cancella Genere</a>
+                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" onclick='backend_redirect_kind()'>Elimina Genere</a>
                                 </div>
                                 <p></p>
                                 <div>
-                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" href="/backend/delete/anime/1/">Cancella Anime</a>
+                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" onclick='backend_redirect_anime()'>Elimina Anime</a>
                                 </div>
                                 <p></p>
                                 <div>
-                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" href="/backend/delete/episode/1/">Cancella Episodio</a>
+                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" onclick='backend_redirect_episode()'>Elimina Episodio</a>
                                 </div>
                                 <p></p>
                                 <div>
-                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" href="/backend/delete/user/1/">Cancella Utente</a>
+                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" href="/backend/delete/user/1/">Elimina Utente</a>
                                 </div>
+                           </div>
                         </div>
                     </div>
 

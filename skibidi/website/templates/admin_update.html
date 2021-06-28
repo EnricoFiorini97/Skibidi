@@ -138,40 +138,45 @@
                                         console.log("episode = " + episode);
                                         var anime_and_season = anime_name + " " + season;
                                         console.log("anime name and season = " + anime_and_season)
-                                        
-                                        $.getJSON(api_json_anime, function(data) {
-                                            for (i = 0; i < data.length; ++i)
-                                            {
-                                                if ((data[i].name + " " + data[i].season).toUpperCase() == anime_and_season.toUpperCase())
-                                                {
-                                                    validAnime = true;
-                                                    pk_anime = data[i].anime_id;
-                                                }
-                                            }
-                                            if (!validAnime)
-                                            {
-                                                alert("L'anime selezinato non esiste.");
-                                                return;
-                                            }
-                                        });
 
-                                        var validEpisode = false;  
-                                        $.getJSON((api_json_view + pk_anime), function(k_data){
-                                            console.log(api_json_view + pk_anime);
-                                            for (i = 0; i < k_data.length; ++i)
-                                            {
-                                                console.log("curr = " + k_data[i].name);
-                                                if (k_data[i].name == episode)
-                                                {
-                                                    validEpisode = true;
-                                                    pk = k_data[i].episode_id
-                                                }
-                                            }
+                                        $.ajax({
+                                            async: false,
+                                            success: function ()
+                                            {                                         
+                                                $.getJSON(api_json_anime, function(data) {
+                                                    for (i = 0; i < data.length; ++i)
+                                                    {
+                                                        if ((data[i].name + " " + data[i].season).toUpperCase() == anime_and_season.toUpperCase())
+                                                        {
+                                                            validAnime = true;
+                                                            pk_anime = data[i].anime_id;
+                                                        }
+                                                    }
+                                                    if (!validAnime)
+                                                    {
+                                                        alert("L'anime selezinato non esiste.");
+                                                        return;
+                                                    }
+                                                    var validEpisode = false;  
+                                                    $.getJSON((api_json_view + pk_anime), function(k_data){
+                                                        console.log(api_json_view + pk_anime);
+                                                        for (i = 0; i < k_data.length; ++i)
+                                                        {
+                                                            console.log("curr = " + k_data[i].name);
+                                                            if (k_data[i].name == episode)
+                                                            {
+                                                                validEpisode = true;
+                                                                pk = k_data[i].episode_id
+                                                            }
+                                                        }
 
-                                            if (validEpisode)
-                                                window.location.replace(base_url + pk);
-                                            else
-                                                alert("L'episodio dell'anime selezinato non esiste.");
+                                                        if (validEpisode)
+                                                            window.location.replace(base_url + pk);
+                                                        else
+                                                            alert("L'episodio dell'anime selezinato non esiste.");
+                                                    });
+                                                });
+                                            }
                                         });
                                     }
                                 </script>
