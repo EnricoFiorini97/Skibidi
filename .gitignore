@@ -8,3 +8,4 @@ skibidi/skibidi/__pycache__/**
 skibidi/website/__pycache__/**
 skibidi/website/migrations/**
 skibidi/static/**
+skibidi/admin_launcher.zsh
