@@ -42,7 +42,11 @@
             {% csrf_token %}
             <p class="uk-text-bold uk-text-large">{{ form.form_name }}</p>
             <fieldset style="margin: auto;width: 50%;" class="uk-fieldset uk-width-1-2">
-                {% crispy form %}
+                {% if user.is_authenticated and user.is_staff %}
+                    {% crispy form %}            
+                {% else %}
+                    <h3>SENTI QUI LE COSE LE DECIDO IO.</h3>
+                {% endif %}
             </fieldset>
         </form>
     </nav></nav>

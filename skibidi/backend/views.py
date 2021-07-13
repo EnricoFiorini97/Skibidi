@@ -10,6 +10,7 @@ from .forms import WatchingForm, KindForm, AnimeForm, EpisodeForm, FavoritesAnim
 from django.urls import reverse
 from rest_framework import permissions
 from django.contrib.auth import get_user_model
+from rest_framework.response import Response
 
 def success(request):
     return render(request, 'success.html', {'msg': 'Operazione riuscita!'})
@@ -42,6 +43,14 @@ class KindListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     queryset = Kind.objects.all()
     serializer_class = KindSerializer
+
+    def get(self, request):
+        queryset = Kind.objects.all()
+        serializers = KindSerializer
+        if serializers.is_valid:
+            return Response(serializers.data, status=200)
+        else:
+            return Response(serializers.data, status=418)
 
 class UserListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]

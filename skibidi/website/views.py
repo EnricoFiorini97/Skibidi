@@ -18,18 +18,21 @@ def kind_inity():
         k_list.append(serialized_kind.data["kind_name"])
     return k_list
 
-
 def index(request):
     form = MainForm()
     if request.GET.get('search') != None:
-        query_set = Anime.objects.filter(name__icontains=request.GET.get('search'))
+        query_set = Anime.objects.filter(name__icontains=request.GET.get('search')).order_by('name','season')
         paginator = Paginator(query_set, len(query_set))
     else:
         query_set = Anime.objects.order_by('name','season')
         paginator = Paginator(query_set, 18)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'index.html', {'form':form, 'kind_list':kind_inity, 'page_obj':page_obj})
+
+    if query_set.exists():
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+    else:
+        page_obj = {}
+    return render(request, 'index.html', {'form':form, 'is_blank':bool(not page_obj) ,'kind_list':kind_inity, 'page_obj':page_obj})
 
 def anime_ep(request, anime, stagione, ep):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
