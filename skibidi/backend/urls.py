@@ -60,5 +60,4 @@ urlpatterns = [
         path('delete/personal/kind/<pk>/', PersonalKindDeleteView.as_view()),
         path('create/personal/<str:kind>/<str:user>/', views.add_personal),
         path('delete/personal/<str:kind>/<str:user>/', views.del_personal),
-        
 ]

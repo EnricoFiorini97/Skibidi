@@ -117,7 +117,6 @@ class UserCreateView(CreateView):
 
 def last_watching(request):
     if request.user.is_authenticated:
-        form = MainForm()
         w = Watching.objects.filter(w_user=User.objects.get(username=request.user)).order_by('-watching_id')
         arr = []
         for x in w:
@@ -126,19 +125,25 @@ def last_watching(request):
             x = [i[::-1] for i in x]
             x[0], x[2] = x[2], x[0]
             arr.append(x)
-        print(arr[0])
-        anime = arr[0][0]
-        stagione = arr[0][1]
-        ep = arr[0][2]
 
+        try:
+            anime = arr[0][0]
+            stagione = arr[0][1]
+            ep = arr[0][2]
+            querysetAnime = Anime.objects.filter(name=anime, season=stagione)
+            identify = None
+
+            for q in querysetAnime:
+                if AnimeSerializer(q).data["name"] == anime and int(AnimeSerializer(q).data["season"]) == int(stagione):
+                    identify = AnimeSerializer(q).data['anime_id']
+
+            querysetEpisode = Episode.objects.filter(e_anime=identify, name=str(ep))
+            serialized_Episode = EpisodeSerializer(querysetEpisode[0])
+            visual = serialized_Episode.data['seen']
+
+            return render(request, 'history.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
         
-        querysetAnime = Anime.objects.filter(name=anime, season=stagione)
-        identify = None
-        for q in querysetAnime:
-            if AnimeSerializer(q).data["name"] == anime and int(AnimeSerializer(q).data["season"]) == int(stagione):
-                identify = AnimeSerializer(q).data['anime_id']
-        querysetEpisode = Episode.objects.filter(e_anime=identify, name=str(ep))
-        serialized_Episode = EpisodeSerializer(querysetEpisode[0])
-        visual = serialized_Episode.data['seen']
-        return render(request, 'history.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
+        except IndexError:
+            return render(request, '404_not_found.html')
+
     return render(request, 'forbidden.html')
