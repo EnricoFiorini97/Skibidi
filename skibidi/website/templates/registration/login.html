@@ -52,20 +52,12 @@
                         </div> </div>
                         <p></p>
                         {% if form.non_field_errors %}
-                            <div id="myModal" style="display: none;position: fixed;left: auto;top: auto;width: 30%;height: 30%;overflow: auto;">
-                                <div style="background-color: #fefefe;margin: auto;padding: 20px;border: 8px solid #888;width: 80%;">
-                                    <span class="close" style="color: black;position:absolute;top:auto;right: auto;font-size: 28px;font-weight: bold;">&times;</span>
-                                    <h1 style="color:black;font-size:15px">
-                                    {{form.non_field_errors}}
+                            
+                                    <h1 style="color:white;font-size:15px">
+                                    Password non corretta
                                     </h1>
-                                </div>
-                            </div>
-                            <script>
-                            var modal = document.getElementById("myModal");
-                            var span = document.getElementsByClassName("close")[0];
-                            modal.style.display = "block";
-                            span.onclick = function() {modal.style.display = "none";}
-                            </script>
+       
+                           
                         {% endif %}
                        
                        

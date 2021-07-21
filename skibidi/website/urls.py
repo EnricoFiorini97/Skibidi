@@ -23,4 +23,5 @@ urlpatterns = [
         path('staff/delete/', views.staff_delete),
         path('profile/',views.profile, name="profile"),
         path('history/', views.last_watching, name="history"),
+        path('kind/<str:kind>/', views.kind_search, name="kind_search"),
 ]       

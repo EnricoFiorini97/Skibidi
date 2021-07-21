@@ -27,6 +27,7 @@ class Anime(models.Model):
     finished = models.BooleanField(null=True, blank=True)
     img_source = models.CharField(max_length=255, null=False)
 
+
     def __str__(self):
         return f"{self.name} {self.season}"
     

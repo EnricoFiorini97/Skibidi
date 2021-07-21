@@ -5,7 +5,7 @@ from backend.forms import AuthForm, UserCreateForm, MainForm
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth import views as auth_views
-from backend.models import Kind, Anime, Episode, PersonalKind, Watching
+from backend.models import Kind, Anime, Episode, PersonalKind, Watching, KindAnime
 from backend.urls import urlpatterns
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -46,7 +46,6 @@ def anime_ep(request, anime, stagione, ep):
     Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
     serialized_Episode = EpisodeSerializer(querysetEpisode[0])
     visual = serialized_Episode.data['seen']
-
     if request.user.is_authenticated: 
         try:
             w_user = User.objects.get(username=request.user)
@@ -147,3 +146,18 @@ def last_watching(request):
             return render(request, '404_not_found.html')
 
     return render(request, 'forbidden.html')
+
+def kind_search(request, kind):
+    identify = None
+    querysetKind = Kind.objects.filter(kind_name=kind)
+
+    for q in querysetKind:
+        if KindSerializer(q).data["kind_name"] == kind:
+            identify = KindSerializer(q).data["kind_id"]
+    
+    querysetKindAnime = KindAnime.objects.filter(ka_kind=identify)
+    tmp = []
+    for q in querysetKindAnime:
+        tmp.append(str(q)[:-len(kind)-1].rsplit(" ", 1))
+
+    return render(request, 'kind.html', {'anime_list':tmp, 'kind_list':kind_inity(), 'kind':kind})

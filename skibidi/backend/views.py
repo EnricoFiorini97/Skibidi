@@ -41,16 +41,8 @@ class EpisodesListAPIView(generics.ListAPIView):
     
 class KindListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    queryset = Kind.objects.all()
     serializer_class = KindSerializer
-
-    def get(self, request):
-        queryset = Kind.objects.all()
-        serializers = KindSerializer
-        if serializers.is_valid:
-            return Response(serializers.data, status=200)
-        else:
-            return Response(serializers.data, status=418)
+    queryset = Kind.objects.all()
 
 class UserListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
@@ -61,6 +53,7 @@ class FavoritesKindListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     queryset = FavoritesKind.objects.all()
     serializer_class = FavoritesKindSerializer
+    
 class FavoritesAnimeListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     queryset = FavoritesAnime.objects.all()

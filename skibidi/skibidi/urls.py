@@ -18,12 +18,10 @@ from django.urls import path, include
 from . import settings
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', include('website.urls')),
     path('backend/', include('backend.urls')),
     path('auth/', include('djoser.urls.authtoken')),
 ]
-
-if settings.ADMIN_ENABLED:
-    urlpatterns.append(path(r'^admin/(.*)', include(admin.site.urls)))
 
 

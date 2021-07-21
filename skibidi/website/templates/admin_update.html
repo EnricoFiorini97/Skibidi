@@ -3,12 +3,36 @@
 
 <!--     Theme CSS   -->
 <link rel="stylesheet" href="/static/css/theme.css">
+<nav id="tm-header" class="uk-navbar ">
+            <div class="uk-container uk-container-center ">
+                <a  href = "/"><img class="uk-margin uk-margin-remove" width="200" height="40" alt="logo" src="/static/img/logo.jpg"/></a>
+                <div class="uk-navbar-flip uk-hidden-small">
+                    <div class="uk-button-group">
+                    {% if user.is_authenticated %}
+                        <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/logout.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log out</a>
+                        <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/profile/"><i class="uk-icon-user uk-margin-small-right"></i> Profile</a>
 
+                        {% if user.is_staff%}
+                            <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/admin_control.html"><i class="uk-icon-cog uk-margin-small-right"></i> Admin Panel</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/login.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
+                        <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/signup.html"><i class="uk-icon-lock uk-margin-small-right"></i>Sign up</a>
+                    {% endif %}                    </div>
+                </div>
+                <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small uk-icon-medium" data-uk-offcanvas></a>
+                <div class="uk-navbar-flip uk-visible-small">
+                    <a href="#offcanvas" class="uk-navbar-toggle uk-navbar-toggle-alt uk-icon-medium" data-uk-offcanvas></a>
+                </div>
+                <div class="uk-navbar-brand uk-navbar-center uk-visible-small"><i class="uk-icon-small uk-text-primary uk-margin-small-right uk-icon-play-circle"></i> Skibidix </div>
+            </div>
+        </nav>
                     <div id="tm-right-section" class="uk-width-large-1-2 uk-width-medium-1-2 uk-container-center"  data-uk-scrollspy="{cls:'uk-animation-fade', target:'img'}">
                             <div class="uk-container uk-container-center uk-margin-large-top">
                                 <h1 class="text-center">Cosa vuoi fare?</h1>
                                <div>
-                                    <input type="text" name="input" placeholder="Item da modificare (es. shonen).." id="param_input">
+                                    <input class="uk-input uk-form-success uk-form-width-medium" type="text" name="input" placeholder="Item da modificare (es. shonen).." id="param_input">
+                                    <p></p> 
                                 </div>
                                 <script>
                                     function backend_redirect_kind()
@@ -179,6 +203,100 @@
                                             }
                                         });
                                     }
+
+                                    function backend_redirect_kindanime()
+                                    {
+                                        var param = document.getElementById("param_input").value;
+                                        
+                                        if (param === "" || !param || param.length === 0 || !param.trim())
+                                        {
+                                            alert("Il parametro di ricerca deve essere una stringa non-nulla e di caratteri validi!");
+                                            return;
+                                        }
+
+                                        const regex = /\d/;
+
+                                        if (!regex.test(param))
+                                        {
+                                            alert("Il parametro di ricerca per gli anime deve contenere anche la stagione da modificare [Nome Anime (spazio) Stagione!")
+                                            return;
+                                        }
+                                            
+                                        var api_json_anime = "/backend/search/serializers/anime/all/";
+                                        var api_json_view = "/backend/search/serializers/kind/anime/all/";
+                                        var base_url = "/backend/update/kind/anime/";
+                                        var validAnime = false;
+                                        var pk = -1;
+                                        var pk_anime = -1;
+
+                                        var param_list = param.split(" ");
+
+                                        var anime_name = "";
+                                        var season = -1;
+                                        var episode = -1;
+                                        console.log(param_list);
+
+                                        for (i = 0; i < param_list.length; ++i)
+                                        {
+                                            if (param_list[i] == '')
+                                                continue;
+                                            
+                                            if (!regex.test(param_list[i]))
+                                            {
+                                                if (anime_name == "")
+                                                    anime_name += param_list[i];
+                                                else
+                                                    anime_name = anime_name + " " + param_list[i];
+                                            }
+                                                
+                                            if (regex.test(param_list[i]))
+                                            {
+                                                if (season == -1)
+                                                    season = param_list[i]
+                                            }
+                                        }
+                                        
+                                        var anime_and_season = anime_name + " " + season;
+
+                                        $.ajax({
+                                            async: false,
+                                            success: function ()
+                                            {                                         
+                                                $.getJSON(api_json_anime, function(data) {
+                                                    for (i = 0; i < data.length; ++i)
+                                                    {
+                                                        if ((data[i].name + " " + data[i].season).toUpperCase() == anime_and_season.toUpperCase())
+                                                        {
+                                                            validAnime = true;
+                                                            pk_anime = data[i].anime_id;
+                                                        }
+                                                    }
+                                                    if (!validAnime)
+                                                    {
+                                                        alert("L'anime selezinato non esiste.");
+                                                        return;
+                                                    }
+                                                    var validKindAnime = false;  
+                                                    $.getJSON((api_json_view), function(k_data){
+                                                        console.log(api_json_view + pk_anime);
+                                                        for (i = 0; i < k_data.length; ++i)
+                                                        {
+                                                            if (k_data[i].ka_anime == pk_anime)
+                                                            {
+                                                                validKindAnime = true;
+                                                                pk = k_data[i].kind_anime_id;
+                                                            }
+                                                        }
+
+                                                        if (validKindAnime)
+                                                            window.location.replace(base_url + pk);
+                                                        else
+                                                            alert("Anime da aggiornare non trovato.");
+                                                    });
+                                                });
+                                            }
+                                        });
+                                    }
                                 </script>
                                 <div>
                                     <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" onclick='backend_redirect_kind()'>Aggiorna Genere</a>
@@ -193,8 +311,9 @@
                                 </div>
                                 <p></p>
                                 <div>
-                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" href="/backend/update/user/1/">Aggiorna Utente</a>
+                                    <a class="uk-button uk-button-danger uk-button-large uk-width-1-2" onclick='backend_redirect_kindanime()'>Aggiorna genere Anime</a>
                                 </div>
+                                <p></p>
                            </div>
                         </div>
                     </div>

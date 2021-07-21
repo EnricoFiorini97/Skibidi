@@ -244,6 +244,9 @@ ka.save()
 ka = KindAnime(ka_anime=Anime.objects.get(name="Boku No Hero Academia", season=2),ka_kind=k2)
 ka.save()
 
+ka = KindAnime(ka_anime=Anime.objects.get(name="One Piece", season=1), ka_kind=k)
+ka.save()
+
 episode_filler(MIRROR_URI="www.onlyonepiece.cloud/", anime="One Piece")
 episode_filler(MIRROR_URI="www.animeflex.cloud/", anime="Boku No Hero Academia", anime_season="5")
 episode_filler(MIRROR_URI="www.brandnewanime.eu/", anime="Kuroko No Basket", anime_season="1")

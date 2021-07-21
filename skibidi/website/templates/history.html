@@ -26,12 +26,14 @@
                     <div class="uk-button-group">
                     {% if user.is_authenticated %}
                         <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/logout.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log out</a>
+                        <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/profile/"><i class="uk-icon-user uk-margin-small-right"></i> Profile</a>
+
                         {% if user.is_staff%}
-                            <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/admin_control.html"><i class="uk-icon-lock uk-margin-small-right"></i> Admin Panel</a>
+                            <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/admin_control.html"><i class="uk-icon-cog uk-margin-small-right"></i> Admin Panel</a>
                         {% endif %}
                     {% else %}
                         <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/login.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
-                        <a class="uk-button uk-button-primary uk-button-small" href="/signup.html">Sign up</a>
+                        <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/signup.html"><i class="uk-icon-lock uk-margin-small-right"></i>Sign up</a>
                     {% endif %}                    </div>
                 </div>
                 <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small uk-icon-medium" data-uk-offcanvas></a>
@@ -50,30 +52,24 @@
                         <div class="uk-dropdown uk-dropdown-navbar">
                             <ul class="uk-nav uk-nav-navbar">
                                 {% for kind in kind_list%}
-                                    <li><a href="#">{{kind}}</a></li>
+                                    <li><a href="/kind/{{kind}}/">{{kind}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
                     </li>
                 </ul>
-                <div class="uk-navbar-flip">
-                    <form class="uk-search uk-margin-small-top uk-margin-left uk-hidden-small">
-                        <input class="uk-search-field" type="search" placeholder="Search..." autocomplete="off">
-                        <div class="uk-dropdown uk-dropdown-flip uk-dropdown-search" aria-expanded="false"></div></form>
-                    </div>
-                </div>
             </nav>
                 <!-- ./ Header Section  -->
 
 
                 <!-- start Main Content (Media Page Section) -->
-                <h3> {{anime}} {{stagione}} {{ep}} </h3>
+
                 <div id="tm-media-section" class="uk-block uk-block-small">
 
                     <div class="uk-container uk-container-center uk-width-8-10">
                         <div class="media-container  uk-container-center">
                         
-                        
+
                         <div class="uk-grid">
                                 <div  class="media-cover">
                                     <!--<video width="1014" height="680" controls autoplay>
@@ -88,5 +84,164 @@
                                     </p>
                                 </div>      
                             </div>
+                            <nav class="uk-flex uk-flex-space-between">
+                                <h3 style="color:white;">Visualizzazioni {{visual}} </h3>
+                            </nav>
+                            <p></p>
                             
+                        </div>
+                      
+
+
+
+                        <div class="uk-grid">
+                            <div class="uk-width-medium-3-10">
+                                <div  class="media-cover">
+                                    <img src="/static/img/Anime/{{anime}} {{stagione}}.jpg" alt="Image" class="uk-scrollspy-inview uk-animation-fade">
+                            </div>
+                               <!-- <a class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin-top" href="/login.html"><i class="uk-icon-heart uk-margin-small-right"></i>Add to Favourites</a> -->
+                            </div>
+                            <div class="uk-width-medium-7-10">
+                                <div class="">
+                                    <ul class="uk-tab uk-tab-grid " data-uk-switcher="{connect:'#media-tabs'}">
+                                        <li class="uk-width-medium-1-2 uk-active"><a href="#">Description</a></li>
+                                        <li class="uk-width-medium-1-2"><a href="#">Trailer</a></li>
+                                        <li class="uk-tab-responsive uk-active uk-hidden" aria-haspopup="true" aria-expanded="false"><a>Active</a><div class="uk-dropdown uk-dropdown-small uk-dropdown-up"><ul class="uk-nav uk-nav-dropdown"></ul><div></div></div></li></ul>
+                                    </div>
+
+                                    <ul id="media-tabs" class="uk-switcher">
+
+                                         <!--     start Tab Panel 1 (Reviews Sections) -->
+
+                                        <li>
+                                            <h2 class="uk-text-contrast uk-margin-large-top">{{anime}} {{stagione}} Episodio {{ep}} <span class="rating uk-margin-small-left uk-h4 uk-text-warning">
+                                                <i class="uk-icon-star "></i>
+                                                <i class="uk-icon-star"></i>
+                                                <i class="uk-icon-star"></i>
+                                                <i class="uk-icon-star"></i>
+                                                <i class="uk-icon-star"></i>
+                                            </span></h2>
+                                            <ul class="uk-subnav uk-subnav-line">
+                                                <li ><i class="uk-icon-star uk-margin-small-right"></i> 9.5</li>
+                                                <li><i class="uk-icon-clock-o uk-margin-small-right"></i> 108 Mins</li>
+                                                <li>    March 04, 2016</li>
+                                            </ul>
+                                            <hr>
+                                            <p class="uk-text-muted uk-h4">Following the events of Age of Ultron, the collective governments of the world pass an act designed to regulate all superhuman activity. This polarizes opinion amongst the Avengers, causing two factions to side with Iron Man or Captain America, which causes an epic battle between former allies.</p>
+                                           <!--  <dl class="uk-description-list-horizontal uk-margin-top">
+                                                <dt>Starring</dt>
+                                                <dd><ul class="uk-subnav ">
+                                                    <li><a href="#">Actor 1</a></li>
+                                                    <li><a href="#">Actor 2</a></li>
+                                                    <li><a href="#">Actor 3</a></li>
+                                                </ul></dd>
+                                                <dt>Generi</dt>
+                                                <dd><ul class="uk-subnav ">
+                                                    <li><a href="#">Comedy </a></li>
+                                                    <li><a href="#">Romance</a></li>
+                                                    <li><a href="#">Crime</a></li>
+                                                </ul></dd>
+                                            </dl>-->
+
+                                            </li>
+
+                                            <!--    ./ Tab Panel 1  -->
+
+                                          <!--     start Tab Panel 2  (Reviews Section) -->
+                                               <!--     ./ Tab Panel 2  -->
+
+
+                                               <!--     start Tab Panel 3 (Trailer Section)  -->
+
+                                                <li>
+                                                    <div class="uk-cover uk-margin-top" style="height: 400px;">
+                                                        <iframe data-uk-cover src="http://www.youtube.com/embed/YE7VzlLtp-4?autoplay=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;loop=1&amp;modestbranding=1&amp;wmode=transparent" width="560" height="315" frameborder="0" allowfullscreen=""></iframe>
+                                                    </div>
+                                                </li>
+
+                                               <!--     ./ Tab Panel 3  -->
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                 <!-- ./ Main Content (Media Page Section) -->
+
+                 <!--     Start Similar Media Section  -->
+
+                        <div class="uk-block ">
+                            <div class="uk-container-center uk-container uk-margin-large-bottom">
+                                <h3 class="uk-margin-large-bottom uk-text-contrast">You might also like</h3>
+                                <div class="uk-margin" data-uk-slideset="{small: 2, medium: 4, large: 6}">
+                                    <div class="uk-slidenav-position uk-margin">
+                                        <ul class="uk-slideset uk-grid uk-flex-center">
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                            <li><a href="media.html"><img src="/static/img/placeholder.png" width="600" height="400" alt=""></a></li>
+                                        </ul>
+                                        <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideset-item="previous"></a>
+                                        <a href="#" class="uk-slidenav uk-slidenav-next uk-slidenav-contrast" data-uk-slideset-item="next"></a>
+                                    </div>
+                                <ul class="uk-slideset-nav uk-dotnav uk-dotnav-contrast uk-flex-center uk-margin-top"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                 <!--     ./ Similar Media Section  -->
+
+                <!-- start Footer Section -->
+
+                    <footer id="tm-footer" class="uk-block uk-block-secondary uk-block-small ">
+                        <div class="uk-container-center uk-container">
+                            <div class="uk-grid">
+                                <div class="uk-width-medium-3-10"><div class="copyright-text">&copy; 2021 <span class="uk-text-bold">Skibidix</span> - Streaming Anime</div></div>
+                                <div class="uk-width-medium-5-10">
+                                    <ul class="uk-subnav ">
+                                        <li><a href="#">Home</a></li>
+                                        <li><a href="#">FAQ's</a></li>
+                                        <li><a href="#">Terms & Conditions</a></li>
+                                        <li><a href="#">Privacy Policy</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                    </ul></div>
+                                    <div class="uk-width-medium-2-10">
+                                        <div class=" uk-float-right"><ul class="uk-subnav">
+                                            <li><a href="https://www.facebook.com/" class="uk-icon-hover uk-icon-medium uk-icon-facebook-square"></a></li>
+                                            <li><a href="https://twitter.com/" class="uk-icon-hover uk-icon-medium uk-icon-twitter"></a></li>
+                                            <li><a href="https://www.instagram.com/" class="uk-icon-hover uk-icon-medium uk-icon-instagram"></a></li>
+                                        </ul></div></div>
+                                    </div>
+                                </div>
+                            </footer>
+
+                <!--     start Footer Section   -->
+
+          
+
+              <!--     ./ Footer Section   -->
+
+             
+              <!--   ./ Offcanvas Menu   -->
+
+              <!--   Include JS   -->
+
+
+                            <script src="/static/js/jquery.js"></script>
+                            <script src="/static/js/simplebar.min.js"></script>
+                            <script src="/static/js/uikit.min.js"></script>
+                            <script src="/static/js/grid.min.js"></script>
+                            <script src="/static/js/slideset.min.js"></script>
+                        </body>
+                    </html>

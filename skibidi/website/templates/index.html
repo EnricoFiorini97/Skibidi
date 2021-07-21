@@ -27,12 +27,14 @@
                     <div class="uk-button-group">
                     {% if user.is_authenticated %}
                         <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/logout.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log out</a>
+                        <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/profile/"><i class="uk-icon-user uk-margin-small-right"></i> Profile</a>
+
                         {% if user.is_staff%}
-                            <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/admin_control.html"><i class="uk-icon-lock uk-margin-small-right"></i> Admin Panel</a>
+                            <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/admin_control.html"><i class="uk-icon-cog uk-margin-small-right"></i> Admin Panel</a>
                         {% endif %}
                     {% else %}
                         <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/login.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
-                        <a class="uk-button uk-button-primary uk-button-small" href="/signup.html">Sign up</a>
+                        <a class="uk-button uk-button-primary uk-button-small uk-margin-left" href="/signup.html"><i class="uk-icon-lock uk-margin-small-right"></i>Sign up</a>
                     {% endif %}
                     </div>
                 </div>
@@ -53,7 +55,7 @@
                         <div class="uk-dropdown uk-dropdown-navbar">
                             <ul class="uk-nav uk-nav-navbar">
                                 {% for kind in kind_list%}
-                                    <li><a href="#">{{kind}}</a></li>
+                                    <li><a href="/kind/{{kind}}/">{{kind}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -129,11 +131,12 @@
 
          <!--     ./ Main Content Section   -->
 
-         <!--     start Footer Section   -->
+        <!--     start Footer Section   -->
 
-            <footer id="tm-footer" class="uk-block uk-block-secondary uk-block-small">
+            <footer id="tm-footer" class="uk-block uk-block-secondary uk-block-small ">
                 <div class="uk-container-center uk-container">
                     <div class="uk-grid">
+                        <div class="uk-width-medium-3-10"><div class="copyright-text">&copy; 2021 <span class="uk-text-bold">Skibidix</span> - Streaming Anime</div></div>
                         <div class="uk-width-medium-5-10">
                             <ul class="uk-subnav ">
                                 <li><a href="#">Home</a></li>
@@ -145,23 +148,19 @@
                             <div class="uk-width-medium-2-10">
                                 <div class=" uk-float-right"><ul class="uk-subnav">
                                     <li><a href="https://www.facebook.com/" class="uk-icon-hover uk-icon-medium uk-icon-facebook-square"></a></li>
-                                    <li><a href="https://www.twitter.com/" class="uk-icon-hover uk-icon-medium uk-icon-twitter"></a></li>
+                                    <li><a href="https://www.twitter.com" class="uk-icon-hover uk-icon-medium uk-icon-twitter"></a></li>
                                     <li><a href="https://www.instagram.com/" class="uk-icon-hover uk-icon-medium uk-icon-instagram"></a></li>
                                 </ul></div></div>
                             </div>
                         </div>
                     </footer>
 
-              <!--     ./ Footer Section   -->
-
-             
-              <!--   ./ Offcanvas Menu   -->
-
-              <!--   Include JS   -->
+                    <!--     ./ Offcanvas Menu   -->
+                    <!--     Include JS   -->
 
                     <script src="/static/js/jquery.js"></script>
                     <script src="/static/js/uikit.min.js"></script>
                     <script src="/static/js/grid.min.js"></script>
-                   
+
                 </body>
             </html>
