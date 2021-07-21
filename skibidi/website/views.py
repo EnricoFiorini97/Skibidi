@@ -41,15 +41,17 @@ def anime_ep(request, anime, stagione, ep):
             identify = AnimeSerializer(q).data['anime_id']
     querysetEpisode = Episode.objects.filter(e_anime=identify, name=str(ep))
     
-    Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
-    serialized_Episode = EpisodeSerializer(querysetEpisode[0])
-    visual = serialized_Episode.data['seen']
-    w_user = User.objects.get(username=request.user)
-    w_anime = Anime.objects.get(name=anime,season=stagione)
-    w_episode = Episode.objects.get(e_anime=identify, name=str(ep))
-    w = Watching(w_user=w_user, w_anime=w_anime, w_episode=w_episode)
-    w.save()
-    return render(request, 'media.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
+    if querysetEpisode:
+        Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
+        serialized_Episode = EpisodeSerializer(querysetEpisode[0])
+        visual = serialized_Episode.data['seen']
+        w_user = User.objects.get(username=request.user)
+        w_anime = Anime.objects.get(name=anime,season=stagione)
+        w_episode = Episode.objects.get(e_anime=identify, name=str(ep))
+        '''w = Watching(w_user=w_user, w_anime=w_anime, w_episode=w_episode)
+        w.save()'''
+        return render(request, 'media.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
+    return render(request, 'media.html', {'kind_list':kind_inity(), 'query':[], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':"", 'visual': 0})
 
 def anime_ep_list(request, anime, stagione):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
