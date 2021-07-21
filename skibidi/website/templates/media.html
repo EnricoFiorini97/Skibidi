@@ -45,8 +45,6 @@
             <div class="uk-container-center uk-container">
                 <ul class="uk-navbar-nav">
                     <li class="uk-active"><a href="">Anime</a></li>
-                    <li><a href="">Film</a></li>
-                    <li><a href="">Music</a></li>
                     <li class="uk-parent" data-uk-dropdown>
                         <a href="">Genere <i class="uk-icon-angle-down uk-margin-small-left"></i></a>
                         <div class="uk-dropdown uk-dropdown-navbar">
@@ -92,7 +90,6 @@
                             </div>
                             <nav class="uk-flex uk-flex-space-between">
                                 <h3 style="color:white;">Visualizzazioni {{visual}} </h3>
-                                <a class="uk-button uk-button-primary uk-button-large" href="/anime/{{anime}}/{{stagione}}/{{ep}}"><i class=" uk-icon-warning"></i> Link non funzionante</a>
                             </nav>
                             <p></p>
                             <div class="uk-button-group">
@@ -103,7 +100,7 @@
                                 {% endif %}
                                 <a style="width:338px;" class="uk-button uk-button-primary uk-button-large" href="{{ep_link}}"><i class=" uk-icon-arrow-down"></i> Download</a>
                                 {% if query.last_episode > ep %}
-                                <a style="width:338px;" class="uk-button uk-button-primary uk-button-large" href="/anime/{{anime}}/{{stagione}}/{{ep|add:-1}}"><i class=" uk-icon-arrow-right"></i> Episodio successivo</a>
+                                <a style="width:338px;" class="uk-button uk-button-primary uk-button-large" href="/anime/{{anime}}/{{stagione}}/{{ep|add:+1}}"><i class=" uk-icon-arrow-right"></i> Episodio successivo</a>
                                 {% else %}
                                 <a style="width:338px;" class="uk-button uk-button-large" disabled><i class=" uk-icon-arrow-right"></i> Episodio successivo</a>
                                 {% endif %}
@@ -117,15 +114,14 @@
                             <div class="uk-width-medium-3-10">
                                 <div  class="media-cover">
                                     <img src="/static/img/Anime/{{anime}} {{stagione}}.jpg" alt="Image" class="uk-scrollspy-inview uk-animation-fade">
-                                </div>
-                                <a class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin-top" href="/login.html"><i class="uk-icon-heart uk-margin-small-right"></i>Add to Favourites</a>
+                            </div>
+                               <!-- <a class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin-top" href="/login.html"><i class="uk-icon-heart uk-margin-small-right"></i>Add to Favourites</a> -->
                             </div>
                             <div class="uk-width-medium-7-10">
                                 <div class="">
                                     <ul class="uk-tab uk-tab-grid " data-uk-switcher="{connect:'#media-tabs'}">
-                                        <li class="uk-width-medium-1-3 uk-active"><a href="#">Description</a></li>
-                                        <li class="uk-width-medium-1-3"><a href="#">Reviews</a></li>
-                                        <li class="uk-width-medium-1-3"><a href="#">Trailer</a></li>
+                                        <li class="uk-width-medium-1-2 uk-active"><a href="#">Description</a></li>
+                                        <li class="uk-width-medium-1-2"><a href="#">Trailer</a></li>
                                         <li class="uk-tab-responsive uk-active uk-hidden" aria-haspopup="true" aria-expanded="false"><a>Active</a><div class="uk-dropdown uk-dropdown-small uk-dropdown-up"><ul class="uk-nav uk-nav-dropdown"></ul><div></div></div></li></ul>
                                     </div>
 
@@ -148,7 +144,7 @@
                                             </ul>
                                             <hr>
                                             <p class="uk-text-muted uk-h4">Following the events of Age of Ultron, the collective governments of the world pass an act designed to regulate all superhuman activity. This polarizes opinion amongst the Avengers, causing two factions to side with Iron Man or Captain America, which causes an epic battle between former allies.</p>
-                                            <dl class="uk-description-list-horizontal uk-margin-top">
+                                           <!--  <dl class="uk-description-list-horizontal uk-margin-top">
                                                 <dt>Starring</dt>
                                                 <dd><ul class="uk-subnav ">
                                                     <li><a href="#">Actor 1</a></li>
@@ -161,50 +157,13 @@
                                                     <li><a href="#">Romance</a></li>
                                                     <li><a href="#">Crime</a></li>
                                                 </ul></dd>
-                                            </dl>
+                                            </dl>-->
 
                                             </li>
 
                                             <!--    ./ Tab Panel 1  -->
 
                                           <!--     start Tab Panel 2  (Reviews Section) -->
-
-                                            <li>
-                                                <div class="uk-margin-small-top">
-                                                    <h3 class="uk-text-contrast uk-margin-top">Post a Review</h3>
-                                                    <div class="uk-alert uk-alert-warning" data-uk-alert="">
-                                                        <a href="" class="uk-alert-close uk-close"></a>
-                                                        <p><i class="uk-icon-exclamation-triangle uk-margin-small-right "></i> Please <a class="uk-text-contrast" href="login.html"> Log in</a> or Sign up to post reviews quicker.</p>
-                                                    </div>
-                                                    <form class="uk-form uk-margin-bottom">
-                                                        <div class="uk-form-row">
-                                                            <textarea class="uk-width-1-1" cols="30" rows="5" placeholder="Type your review here..."></textarea>
-                                                            
-                                                        </div>
-                                                        <div class="uk-form-row">
-                                                            <a href="" class="uk-button uk-button-large uk-button-success uk-float-right">Post</a>
-                                                        </div>
-                                                    </form>
-                                                    </div>
-
-                                                    <div  class="uk-scrollable-box uk-responsive-width " data-simplebar-direction="vertical">
-                                                        <ul class="uk-comment-list uk-margin-top" >
-                                                            <li>
-                                                                <article class="uk-comment uk-panel uk-panel-space uk-panel-box-secondary">
-                                                                    <header class="uk-comment-header">
-                                                                        <img class="uk-comment-avatar uk-border-circle" src="/static/img/avatar3.jpg" width="50" height="50" alt="">
-                                                                        <h4 class="uk-comment-title">@movielover</h4>
-                                                                        <div class="uk-comment-meta">2 days ago </div>
-                                                                    </header>
-                                                                    <div class="uk-comment-body">
-                                                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                                                                    </div>
-                                                                </article>
-                                                            </li>
-                                                            
-                                                        </ul>
-                                                    </div>
-                                                </li>
                                                <!--     ./ Tab Panel 2  -->
 
 
@@ -275,10 +234,9 @@
                                     </ul></div>
                                     <div class="uk-width-medium-2-10">
                                         <div class=" uk-float-right"><ul class="uk-subnav">
-                                            <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-facebook-square"></a></li>
-                                            <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-twitter"></a></li>
-                                            <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-instagram"></a></li>
-                                            <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-pinterest"></a></li>
+                                            <li><a href="https://www.facebook.com/" class="uk-icon-hover uk-icon-medium uk-icon-facebook-square"></a></li>
+                                            <li><a href="https://twitter.com/" class="uk-icon-hover uk-icon-medium uk-icon-twitter"></a></li>
+                                            <li><a href="https://www.instagram.com/" class="uk-icon-hover uk-icon-medium uk-icon-instagram"></a></li>
                                         </ul></div></div>
                                     </div>
                                 </div>

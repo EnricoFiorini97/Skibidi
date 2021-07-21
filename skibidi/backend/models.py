@@ -63,7 +63,7 @@ class Episode(models.Model):
 
 class Watching(models.Model):
     class Meta:
-        unique_together = (('w_anime', 'w_user'),)
+        unique_together = (('w_anime', 'w_user', 'w_episode'), )
     watching_id = models.AutoField(primary_key=True)
     w_user = models.ForeignKey(User, related_name='w_user', on_delete=CASCADE, null=False)
     w_anime = models.ForeignKey(Anime, related_name='w_anime', on_delete=CASCADE, null=False)

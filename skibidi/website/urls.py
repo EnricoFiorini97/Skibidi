@@ -22,5 +22,5 @@ urlpatterns = [
         path('staff/update/', views.staff_update),
         path('staff/delete/', views.staff_delete),
         path('profile/',views.profile, name="profile"),
-        path('history/', views.history, name="history"),
+        path('history/', views.last_watching, name="history"),
 ]       

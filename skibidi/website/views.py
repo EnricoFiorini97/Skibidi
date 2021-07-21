@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from django.core.paginator import Paginator
 from backend.serializers import WatchingSerializer, UserSerializer, KindSerializer, AnimeSerializer, EpisodeSerializer
 from backend.forms import AuthForm, UserCreateForm, MainForm
@@ -9,6 +9,7 @@ from backend.models import Kind, Anime, Episode, PersonalKind, Watching
 from backend.urls import urlpatterns
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.db.utils import IntegrityError
 
 def kind_inity():
     k_list = []
@@ -36,22 +37,27 @@ def index(request):
 
 def anime_ep(request, anime, stagione, ep):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
+    identify = None
     for q in querysetAnime:
         if AnimeSerializer(q).data["name"] == anime and AnimeSerializer(q).data["season"] == stagione: 
             identify = AnimeSerializer(q).data['anime_id']
+            
     querysetEpisode = Episode.objects.filter(e_anime=identify, name=str(ep))
-    
-    if querysetEpisode:
-        Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
-        serialized_Episode = EpisodeSerializer(querysetEpisode[0])
-        visual = serialized_Episode.data['seen']
-        ''' w_user = User.objects.get(username=request.user)
-        w_anime = Anime.objects.get(name=anime,season=stagione)
-        w_episode = Episode.objects.get(e_anime=identify, name=str(ep))
-        w = Watching(w_user=w_user, w_anime=w_anime, w_episode=w_episode)
-        w.save()'''
-        return render(request, 'media.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
-    return render(request, 'media.html', {'kind_list':kind_inity(), 'query':[], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':"", 'visual': 0})
+    Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
+    serialized_Episode = EpisodeSerializer(querysetEpisode[0])
+    visual = serialized_Episode.data['seen']
+
+    if request.user.is_authenticated: 
+        try:
+            w_user = User.objects.get(username=request.user)
+            w_anime = Anime.objects.get(name=anime,season=stagione)
+            w_episode = Episode.objects.get(e_anime=identify, name=str(ep))
+            w = Watching(w_user=w_user, w_anime=w_anime, w_episode=w_episode)
+            w.save()
+        except IntegrityError:
+            print("[DEBUG] Secondo me è già inserito, poi vedi tu - Cit il DB /[DEBUG]")
+            pass
+    return render(request, 'media.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
 
 def anime_ep_list(request, anime, stagione):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
@@ -109,7 +115,7 @@ class UserCreateView(CreateView):
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('index')
 
-def history(request):
+def last_watching(request):
     if request.user.is_authenticated:
         form = MainForm()
         w = Watching.objects.filter(w_user=User.objects.get(username=request.user)).order_by('-watching_id')
@@ -120,11 +126,19 @@ def history(request):
             x = [i[::-1] for i in x]
             x[0], x[2] = x[2], x[0]
             arr.append(x)
-        print(arr)
-            
-        #query_set = Anime.objects.order_by('name','season')
-        #paginator = Paginator(query_set, len(query_set))
-        #page_number = request.GET.get('page')
-        #page_obj = paginator.get_page(page_number)
-        return render(request, 'index.html', {'form':form})
+        print(arr[0])
+        anime = arr[0][0]
+        stagione = arr[0][1]
+        ep = arr[0][2]
+
+        
+        querysetAnime = Anime.objects.filter(name=anime, season=stagione)
+        identify = None
+        for q in querysetAnime:
+            if AnimeSerializer(q).data["name"] == anime and int(AnimeSerializer(q).data["season"]) == int(stagione):
+                identify = AnimeSerializer(q).data['anime_id']
+        querysetEpisode = Episode.objects.filter(e_anime=identify, name=str(ep))
+        serialized_Episode = EpisodeSerializer(querysetEpisode[0])
+        visual = serialized_Episode.data['seen']
+        return render(request, 'history.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
     return render(request, 'forbidden.html')
