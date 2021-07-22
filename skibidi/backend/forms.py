@@ -1,5 +1,5 @@
 from django import forms
-from .models import PersonalKind, KindAnime, UserRating, FavoritesAnime, Kind, Anime, Episode, FavoritesKind, Watching
+from .models import PersonalKind, KindAnime, FavoritesAnime, Kind, Anime, Episode, FavoritesKind, Watching
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordResetForm, SetPasswordForm
@@ -80,18 +80,6 @@ class KindAnimeForm(forms.ModelForm):
     class Meta:
         model = KindAnime
         fields = ['ka_kind', 'ka_anime']
-
-class UserRatingForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(UserRatingForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_method='POST'
-        self.helper.form_class='submit'
-        self.form_name = "Aggiungi rating utente per anime"
-        self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
-    class Meta:
-        model = UserRating
-        fields = ['ur_anime', 'ur_user', 'rating']
 
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

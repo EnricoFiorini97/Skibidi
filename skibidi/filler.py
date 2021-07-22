@@ -1,4 +1,4 @@
-from backend.models import KindAnime, User, Kind, Anime, FavoritesKind, FavoritesAnime, Watching, UserRating, Episode
+from backend.models import KindAnime, User, Kind, Anime, FavoritesKind, FavoritesAnime, Watching, Episode
 from backend.serializers import AnimeSerializer
 from colorama import Fore
 from django.contrib.auth.models import User
@@ -95,9 +95,6 @@ e.save()
 
 w = Watching(w_user=u, w_anime=a, w_episode=e, seconds=134)
 w.save()
-
-ur = UserRating(ur_anime=a,ur_user=u,rating=4)
-ur.save()
 
 ka = KindAnime(ka_anime=a,ka_kind=k)
 ka.save()

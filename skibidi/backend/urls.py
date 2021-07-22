@@ -1,10 +1,10 @@
 from . import views
 from django.urls import path 
-from backend.views import AnimeListAPIView, KindListAPIView, UserFavoritesAnimeListAPIView, UserListAPIView, FavoritesKindListAPIView, FavoritesAnimeListAPIView, WatchingListAPIView, UserRatingListAPIView, KindAnimeListAPIView
+from backend.views import AnimeListAPIView, KindListAPIView, UserFavoritesAnimeListAPIView, UserListAPIView, FavoritesKindListAPIView, FavoritesAnimeListAPIView, WatchingListAPIView, KindAnimeListAPIView
 from backend.views import AnimeUniqueListAPIView, EpisodesListAPIView, SeasonsListAPIView, UserFavoritesKindListAPIView, SpecificAnimeKindListAPIView, AnimeEpisodeListAPIView
-from backend.views import PersonalKindCreateView, WatchingCreateView, KindCreateView, AnimeCreateView, EpisodeCreateView, FavoritesAnimeCreateView, UserCreateView, FavoritesKindCreateView, UserRatingCreateView, KindAnimeCreateView
-from backend.views import PersonalKindUpdateView, KindAnimeUpdateView, EpisodeUpdateView, AnimeUpdateView, KindUpdateView, WatchingUpdateView, UserRatingUpdateView, FavoritesAnimeUpdateView, FavoritesKindUpdateView, UserUpdateView
-from backend.views import PersonalKindDeleteView, KindAnimeDeleteView, EpisodeDeleteView, AnimeDeleteView, KindDeleteView, WatchingDeleteView, UserRatingDeleteView, FavoritesAnimeDeleteView, FavoritesKindDeleteView, UserDeleteView
+from backend.views import PersonalKindCreateView, WatchingCreateView, KindCreateView, AnimeCreateView, EpisodeCreateView, FavoritesAnimeCreateView, UserCreateView, FavoritesKindCreateView, KindAnimeCreateView
+from backend.views import PersonalKindUpdateView, KindAnimeUpdateView, EpisodeUpdateView, AnimeUpdateView, KindUpdateView, WatchingUpdateView, FavoritesAnimeUpdateView, FavoritesKindUpdateView, UserUpdateView
+from backend.views import PersonalKindDeleteView, KindAnimeDeleteView, EpisodeDeleteView, AnimeDeleteView, KindDeleteView, WatchingDeleteView, FavoritesAnimeDeleteView, FavoritesKindDeleteView, UserDeleteView
 
 
 urlpatterns = [
@@ -14,7 +14,6 @@ urlpatterns = [
         path('search/serializers/favorites/kind/all/', FavoritesKindListAPIView.as_view()),
         path('search/serializers/favorites/anime/all/', FavoritesAnimeListAPIView.as_view()),
         path('search/serializers/watching/all/', WatchingListAPIView.as_view()),
-        path('search/serializers/user/rating/all/', UserRatingListAPIView.as_view()),
         path('search/serializers/kind/anime/all/', KindAnimeListAPIView.as_view()),
         path('search/serializers/anime/all/list/', AnimeUniqueListAPIView.as_view()),
         path('search/serializers/anime/<str:anime>/seasons/', SeasonsListAPIView.as_view()),
@@ -33,7 +32,6 @@ urlpatterns = [
         path('create/user/', UserCreateView.as_view()),
         path('create/favorites/kind/', FavoritesKindCreateView.as_view()),
         path('create/kind/anime/', KindAnimeCreateView.as_view()),
-        path('create/user/rating/', UserRatingCreateView.as_view()),
         path('create/watching/', WatchingCreateView.as_view()),
         path('create/personal/kind/', PersonalKindCreateView.as_view()),
         # ---- Update ----
@@ -44,7 +42,6 @@ urlpatterns = [
         path('update/user/<pk>/', UserUpdateView.as_view()),
         path('update/favorites/kind/<pk>/', FavoritesKindUpdateView.as_view()),
         path('update/kind/anime/<pk>/', KindAnimeUpdateView.as_view()),
-        path('update/user/rating/<pk>/', UserRatingUpdateView.as_view()),
         path('update/watching/<pk>/', WatchingUpdateView.as_view()),
         path('update/personal/kind/<pk>/', PersonalKindUpdateView.as_view()),
         # ---- Delete ----
@@ -55,7 +52,6 @@ urlpatterns = [
         path('delete/user/<pk>/', UserDeleteView.as_view()),
         path('delete/favorites/kind/<pk>/', FavoritesKindDeleteView.as_view()),
         path('delete/kind/anime/<pk>/', KindAnimeDeleteView.as_view()),
-        path('delete/user/rating/<pk>/', UserRatingDeleteView.as_view()),
         path('delete/watching/<pk>/', WatchingDeleteView.as_view()),
         path('delete/personal/kind/<pk>/', PersonalKindDeleteView.as_view()),
         path('create/personal/<str:kind>/<str:user>/', views.add_personal),

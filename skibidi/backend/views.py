@@ -1,11 +1,11 @@
-from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, UserRatingSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer, PersonalKindSerializer
+from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer, PersonalKindSerializer
 from rest_framework import generics
-from backend.models import  Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, PersonalKind
+from backend.models import  Anime, Episode, Kind, FavoritesKind, Watching, FavoritesAnime, KindAnime, PersonalKind
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import WatchingForm, KindForm, AnimeForm, EpisodeForm, FavoritesAnimeForm, FavoritesKindForm, KindAnimeForm, UserRatingForm, PersonalKindForm
+from .forms import WatchingForm, KindForm, AnimeForm, EpisodeForm, FavoritesAnimeForm, FavoritesKindForm, KindAnimeForm, PersonalKindForm
 from django.urls import reverse
 from rest_framework import permissions
 
@@ -61,11 +61,6 @@ class WatchingListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     queryset = Watching.objects.all()
     serializer_class = WatchingSerializer
-
-class UserRatingListAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    queryset = UserRating.objects.all()
-    serializer_class = UserRatingSerializer
 
 class KindAnimeListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
@@ -165,15 +160,6 @@ class KindAnimeCreateView(CreateView):
     def get_success_url(self):
         return reverse('success')
 
-class UserRatingCreateView(CreateView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    form_class = UserRatingForm
-    model = UserRating
-    template_name = "form.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
 class WatchingCreateView(CreateView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     form_class = WatchingForm
@@ -257,15 +243,6 @@ class KindAnimeUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('success')
 
-class UserRatingUpdateView(UpdateView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    form_class = UserRatingForm
-    model = UserRating
-    template_name = "form.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
 class WatchingUpdateView(UpdateView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     form_class = WatchingForm
@@ -337,14 +314,6 @@ class FavoritesKindDeleteView(DeleteView):
 class KindAnimeDeleteView(DeleteView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     model = KindAnime
-    template_name = "confirm_delete.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
-class UserRatingDeleteView(DeleteView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    model = UserRating
     template_name = "confirm_delete.html"
 
     def get_success_url(self):

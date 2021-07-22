@@ -45,12 +45,6 @@ class WatchingSerializer(serializers.Serializer):
     w_episode = serializers.PrimaryKeyRelatedField(queryset=Episode.objects.all())
     seconds = serializers.IntegerField()
 
-class UserRatingSerializer(serializers.Serializer):
-    user_rating_id = serializers.IntegerField()
-    ur_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
-    ur_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
-    rating = serializers.IntegerField()
-
 class KindAnimeSerializer(serializers.Serializer):
     kind_anime_id = serializers.IntegerField()
     ka_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())

@@ -73,16 +73,6 @@ class Watching(models.Model):
     def __str__(self):
         return f"{self.w_episode}"
 
-class UserRating(models.Model):
-    class Meta:
-        unique_together = (('ur_anime', 'ur_user'),)
-    user_rating_id = models.AutoField(primary_key=True)
-    ur_anime = models.ForeignKey(Anime, related_name='ur_anime', on_delete=CASCADE, null=False)
-    ur_user = models.ForeignKey(User, related_name='ur_user' ,on_delete=CASCADE, null=False)
-    rating = models.PositiveSmallIntegerField(null=False)
-    def __str__(self):
-        return f"{self.ur_anime} {self.ur_user}"
-
 class KindAnime(models.Model):
     class Meta:
         unique_together = (('ka_anime', 'ka_kind'),)
