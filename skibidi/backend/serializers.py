@@ -28,16 +28,6 @@ class KindSerializer(serializers.Serializer):
     kind_id = serializers.IntegerField()
     kind_name = serializers.CharField(max_length = 255)
 
-class FavoritesKindSerializer(serializers.Serializer):
-    favorites_kind_id = serializers.IntegerField()
-    fk_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
-    fk_kind = serializers.PrimaryKeyRelatedField(queryset=Kind.objects.all())
-
-class FavoritesAnimeSerializer(serializers.Serializer):
-    favorites_anime_id = serializers.IntegerField()
-    fa_anime = serializers.PrimaryKeyRelatedField(queryset=Anime.objects.all())
-    fa_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
-
 class WatchingSerializer(serializers.Serializer):
     watching_id = serializers.IntegerField()
     w_user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())

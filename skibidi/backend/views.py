@@ -1,11 +1,11 @@
-from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer, PersonalKindSerializer
+from backend.serializers import AnimeSerializer, KindSerializer, WatchingSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer, PersonalKindSerializer
 from rest_framework import generics
-from backend.models import  Anime, Episode, Kind, FavoritesKind, Watching, FavoritesAnime, KindAnime, PersonalKind
+from backend.models import  Anime, Episode, Kind, Watching, KindAnime, PersonalKind
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import WatchingForm, KindForm, AnimeForm, EpisodeForm, FavoritesAnimeForm, FavoritesKindForm, KindAnimeForm, PersonalKindForm
+from .forms import WatchingForm, KindForm, AnimeForm, EpisodeForm, KindAnimeForm, PersonalKindForm
 from django.urls import reverse
 from rest_framework import permissions
 
@@ -47,16 +47,6 @@ class UserListAPIView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class FavoritesKindListAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    queryset = FavoritesKind.objects.all()
-    serializer_class = FavoritesKindSerializer
-    
-class FavoritesAnimeListAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    queryset = FavoritesAnime.objects.all()
-    serializer_class = FavoritesAnimeSerializer
-
 class WatchingListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     queryset = Watching.objects.all()
@@ -66,20 +56,6 @@ class KindAnimeListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     queryset = KindAnime.objects.all()
     serializer_class = KindAnimeSerializer
-
-class UserFavoritesAnimeListAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    serializer_class = FavoritesAnimeSerializer
-    
-    def get_queryset(self):
-        return FavoritesAnime.objects.filter(fa_user_id=self.kwargs['user_id'])
-
-class UserFavoritesKindListAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    serializer_class = FavoritesKindSerializer
-    
-    def get_queryset(self):
-        return FavoritesKind.objects.filter(fk_user_id=self.kwargs['user_id'])
 
 class SpecificAnimeKindListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
@@ -124,28 +100,10 @@ class EpisodeCreateView(CreateView):
     def get_success_url(self):
         return reverse('success')
 
-class FavoritesAnimeCreateView(CreateView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    form_class = FavoritesAnimeForm
-    model = FavoritesAnime
-    template_name = "form.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
 class UserCreateView(CreateView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     form_class = UserCreationForm
     model = User
-    template_name = "form.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
-class FavoritesKindCreateView(CreateView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    form_class = FavoritesKindForm
-    model = FavoritesKind
     template_name = "form.html"
 
     def get_success_url(self):
@@ -207,28 +165,10 @@ class KindUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('success')
 
-class FavoritesAnimeUpdateView(UpdateView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    form_class = FavoritesAnimeForm
-    model = FavoritesAnime
-    template_name = "form.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
 class UserUpdateView(UpdateView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     form_class = UserCreationForm
     model = User
-    template_name = "form.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
-class FavoritesKindUpdateView(UpdateView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    form_class = FavoritesKindForm
-    model = FavoritesKind
     template_name = "form.html"
 
     def get_success_url(self):
@@ -287,25 +227,9 @@ class EpisodeDeleteView(DeleteView):
     def get_success_url(self):
         return reverse('success')
 
-class FavoritesAnimeDeleteView(DeleteView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    model = FavoritesAnime
-    template_name = "confirm_delete.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
 class UserDeleteView(DeleteView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
     model = User
-    template_name = "confirm_delete.html"
-
-    def get_success_url(self):
-        return reverse('success')
-
-class FavoritesKindDeleteView(DeleteView):
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
-    model = FavoritesKind
     template_name = "confirm_delete.html"
 
     def get_success_url(self):

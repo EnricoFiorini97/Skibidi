@@ -1,4 +1,4 @@
-from backend.models import KindAnime, User, Kind, Anime, FavoritesKind, FavoritesAnime, Watching, Episode
+from backend.models import KindAnime, User, Kind, Anime, Watching, Episode
 from backend.serializers import AnimeSerializer
 from colorama import Fore
 from django.contrib.auth.models import User
@@ -83,12 +83,6 @@ a.save()
 
 a = Anime(name="Code Geass", global_rating = 5,plot="x", season="2", last_episode=25, start_number_episode=1, last_update="2021-06-06", autodownlodable=False, finished=False, img_source=img_source_builder(name="Code Geass", season="2"))
 a.save()
-
-fk = FavoritesKind(fk_user=u, fk_kind=k)
-fk.save()
-
-fa = FavoritesAnime(fa_anime=a, fa_user=u)
-fa.save()
 
 e = Episode(name="1", seen=1, e_anime=a, path="")
 e.save()

@@ -1,5 +1,5 @@
 from django import forms
-from .models import PersonalKind, KindAnime, FavoritesAnime, Kind, Anime, Episode, FavoritesKind, Watching
+from .models import PersonalKind, KindAnime, Kind, Anime, Episode, Watching
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordResetForm, SetPasswordForm
@@ -45,30 +45,6 @@ class KindForm(forms.ModelForm):
         model = Kind
         fields = ['kind_name']
         
-class FavoritesAnimeForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(FavoritesAnimeForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_method='POST'
-        self.helper.form_class='submit'
-        self.form_name = "Aggiungi anime preferito ad utente"
-        self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
-    class Meta:
-        model = FavoritesAnime
-        fields = ['fa_anime', 'fa_user']
-
-class FavoritesKindForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(FavoritesKindForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_method='POST'
-        self.helper.form_class='submit'
-        self.form_name = "Aggiungi genere preferito ad utente"
-        self.helper.add_input(Submit('submit', 'Submit', css_class="uk-button uk-button-large uk-button-danger"))
-    class Meta:
-        model = FavoritesKind
-        fields = ['fk_kind', 'fk_user']
-
 class KindAnimeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(KindAnimeForm, self).__init__(*args, **kwargs)
