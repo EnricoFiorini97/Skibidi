@@ -1,12 +1,11 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render
 from django.core.paginator import Paginator
-from backend.serializers import WatchingSerializer, UserSerializer, KindSerializer, AnimeSerializer, EpisodeSerializer
+from backend.serializers import KindAnimeSerializer, KindSerializer, AnimeSerializer, EpisodeSerializer, UserSerializer, PersonalKindSerializer
 from backend.forms import AuthForm, UserCreateForm, MainForm
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth import views as auth_views
 from backend.models import Kind, Anime, Episode, PersonalKind, Watching, KindAnime
-from backend.urls import urlpatterns
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
@@ -43,10 +42,28 @@ def anime_ep(request, anime, stagione, ep):
             identify = AnimeSerializer(q).data['anime_id']
             
     querysetEpisode = Episode.objects.filter(e_anime=identify, name=str(ep))
-    Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
-    serialized_Episode = EpisodeSerializer(querysetEpisode[0])
+    serialized_Episode = None
+    try:
+        Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
+        serialized_Episode = EpisodeSerializer(querysetEpisode[0])
+    except IndexError:
+        return render(request, '404_not_found.html')
     visual = serialized_Episode.data['seen']
     if request.user.is_authenticated: 
+        serialized_user_id = UserSerializer(User.objects.filter(username=request.user)[0]).data['id']
+        queryset_personal_kind = PersonalKind.objects.filter(p_user=serialized_user_id)
+
+        also_like = set()
+        for personal_kind in queryset_personal_kind:
+            curr_pk_id = PersonalKindSerializer(personal_kind).data['personal_kind_id']
+            for item in KindAnime.objects.filter(ka_kind=curr_pk_id):
+                if len(also_like) > 12:
+                    break
+                tmp = str(item).split(" ")
+                anime_name = " ".join(tmp[:-2])
+                season = " ".join(tmp[len(tmp)-2:-1])
+                also_like.add((anime_name, season))
+
         try:
             w_user = User.objects.get(username=request.user)
             w_anime = Anime.objects.get(name=anime,season=stagione)
@@ -56,7 +73,7 @@ def anime_ep(request, anime, stagione, ep):
         except IntegrityError:
             print("[DEBUG] Secondo me è già inserito, poi vedi tu - Cit il DB /[DEBUG]")
             pass
-    return render(request, 'media.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual})
+    return render(request, 'media.html', {'kind_list':kind_inity(), 'query':querysetAnime[0], 'anime': anime,'stagione':stagione,'ep':ep, 'ep_link':serialized_Episode.data["path"], 'visual': visual, 'also_like' : also_like})
 
 def anime_ep_list(request, anime, stagione):
     querysetAnime = Anime.objects.filter(name=anime, season=stagione)
