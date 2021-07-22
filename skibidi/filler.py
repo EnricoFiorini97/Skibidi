@@ -66,10 +66,13 @@ def episode_filler(MIRROR_URI=None, use_https=False, anime="One Piece", anime_se
 
 
 
-u = User.objects.create_user(first_name="Luca", last_name="Pocchione", email="lucapocchione@analbeat.com", username="capocchione", password="pass", is_staff=True)
+u = User.objects.create_user(first_name="Enrico", last_name="Fiorini", email="test@gmail.com", username="enrico", password="pass", is_staff=True)
 u.save()
 
-u = User.objects.create_user(first_name="Marcello", last_name="Salterello", email="tisalto@inculo.com", username="analjump", password="pass", is_staff=False)
+u = User.objects.create_user(first_name="Carmine", last_name="la Luna", email="test2@gmail.com", username="carmine", password="pass", is_staff=True)
+u.save()
+
+u = User.objects.create_user(first_name="Unprivileged", last_name="Customer", email="test3@gmail.com", username="unprivileged", password="pass")
 u.save()
 
 k = Kind(kind_name="shonen")
