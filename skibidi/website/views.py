@@ -43,17 +43,19 @@ def anime_ep(request, anime, stagione, ep):
             
     querysetEpisode = Episode.objects.filter(e_anime=identify, name=str(ep))
     serialized_Episode = None
+    
     try:
         Episode.objects.filter(e_anime=identify, name=str(ep)).update(seen=(EpisodeSerializer(querysetEpisode[0])).data['seen']+1)
         serialized_Episode = EpisodeSerializer(querysetEpisode[0])
     except IndexError:
         return render(request, '404_not_found.html')
     visual = serialized_Episode.data['seen']
+
+    also_like = set()
     if request.user.is_authenticated: 
         serialized_user_id = UserSerializer(User.objects.filter(username=request.user)[0]).data['id']
         queryset_personal_kind = PersonalKind.objects.filter(p_user=serialized_user_id)
 
-        also_like = set()
         for personal_kind in queryset_personal_kind:
             curr_pk_id = PersonalKindSerializer(personal_kind).data['personal_kind_id']
             for item in KindAnime.objects.filter(ka_kind=curr_pk_id):
