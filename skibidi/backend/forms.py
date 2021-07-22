@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, Pass
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+
 class EpisodeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EpisodeForm, self).__init__(*args, **kwargs)
@@ -92,7 +93,6 @@ class UserRatingForm(forms.ModelForm):
         model = UserRating
         fields = ['ur_anime', 'ur_user', 'rating']
 
-
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
@@ -118,7 +118,6 @@ class WatchingForm(forms.ModelForm):
     class Meta:
         model = Watching
         fields = ['w_user', 'w_anime','w_episode', 'seconds']
-
 
 class AuthForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'autofocus': True, 'class':"uk-width-1-1", 'placeholder':"Username"}))
@@ -187,8 +186,7 @@ class UserCreateForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
-        
+    
 class PwdResetForm(PasswordResetForm):
     email = forms.EmailField(
         label=("Email"),

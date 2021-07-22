@@ -61,7 +61,6 @@ class Episode(models.Model):
     def __str__(self):
         return f"{self.e_anime} {self.name}"
 
-
 class Watching(models.Model):
     class Meta:
         unique_together = (('w_anime', 'w_user', 'w_episode'), )

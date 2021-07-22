@@ -1,4 +1,3 @@
-from django.http.response import HttpResponse
 from backend.serializers import AnimeSerializer, KindSerializer, FavoritesKindSerializer, UserRatingSerializer, WatchingSerializer, FavoritesAnimeSerializer, KindAnimeSerializer, UserSerializer, EpisodeSerializer, PersonalKindSerializer
 from rest_framework import generics
 from backend.models import  Anime, Episode, Kind, FavoritesKind, UserRating, Watching, FavoritesAnime, KindAnime, PersonalKind
@@ -9,8 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import WatchingForm, KindForm, AnimeForm, EpisodeForm, FavoritesAnimeForm, FavoritesKindForm, KindAnimeForm, UserRatingForm, PersonalKindForm
 from django.urls import reverse
 from rest_framework import permissions
-from django.contrib.auth import get_user_model
-from rest_framework.response import Response
+
 
 def success(request):
     return render(request, 'success.html', {'msg': 'Operazione riuscita!'})
@@ -192,7 +190,8 @@ class PersonalKindCreateView(CreateView):
     template_name = "form.html"
 
     def get_success_url(self):
-        return reverse('success')                
+        return reverse('success')         
+
 #---- UpdateViews----
 
 class EpisodeUpdateView(UpdateView):
@@ -230,7 +229,6 @@ class FavoritesAnimeUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('success')
-
 
 class UserUpdateView(UpdateView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
@@ -285,6 +283,7 @@ class PersonalKindUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('success') 
+
 #---- DeleteViews----
 
 class KindDeleteView(DeleteView):
@@ -318,7 +317,6 @@ class FavoritesAnimeDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('success')
-
 
 class UserDeleteView(DeleteView):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
@@ -367,7 +365,6 @@ class PersonalKindDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('success')  
-
 
 def add_personal(request, user, kind):
     p_user = User.objects.get(username=user)
