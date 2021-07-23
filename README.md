@@ -1,5 +1,5 @@
 # Skibidix
-Welcome to Skibidix embedded streaming Platform!
+Benvenuti su Skibidix embedded streaming!
 
 
 ## Developing Team
