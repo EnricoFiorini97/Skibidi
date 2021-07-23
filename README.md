@@ -24,7 +24,7 @@ Welcome to Skibidix embedded streaming Platform!
   pip install -r requirements.txt
 ```
 - **Fornire i permessi di esecuzione al launcher**
-- 
+
 ```bash
   chmod +x launcher.zsh
 ```
