@@ -9,7 +9,7 @@ Welcome to Skibidix embedded streaming Platform!
 | Nome | Matricola | Ruolo |
 | ------ | ------ | ------ |
 | Enrico Fiorini | 128426 | Developer-Backend-SYS OP |
-| Carmine La Luna | 131015 | Developer-Backend-SYS OP |
+| Carmine la Luna | 131015 | Developer-Backend-SYS OP |
 
 
 ### Come eseguire il progetto
