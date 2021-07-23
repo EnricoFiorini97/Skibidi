@@ -14,7 +14,7 @@ Benvenuti su Skibidix embedded streaming!
 
 ### Come eseguire il progetto
 
-- **ATTENZIONE: Il presente progetto prevede un launcher soltanto per sistemi operativi Unix/Unix-like**
+#### ATTENZIONE: Il presente progetto prevede un launcher soltanto per sistemi operativi Unix/Unix-like
 
 - **Installare MariaDB Server**: Dipendentemente dal proprio sistema operativo, si installi il server MariaDB, e si abiliti il servizio.
 
