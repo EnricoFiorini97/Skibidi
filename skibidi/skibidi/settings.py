@@ -17,12 +17,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = env.ALLOWED_HOSTS.copy()
 
-#Flag for production
-ADMIN_ENABLED = env.IS_ADMIN_ENABLED
-
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
